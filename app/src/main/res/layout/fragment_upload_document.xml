@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".fragments.UploadDocumentFragment">
+    <!--+917480920092-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="ID Proof (Adahar Card / Voter ID)"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+
+            <LinearLayout
+                android:id="@+id/ll_img_done11"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Memorandum of Article (MOA) with board of Director(in case of Limited Company)"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+
+            <LinearLayout
+                android:id="@+id/ll_img_done1"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Registration Certificate in case of firm"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done2"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Appointment letter of firm"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done3"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Relevent licence from competent authority"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done4"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Installation report ( In case of instrument )"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done5"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="No objection certificate from competent authority"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done6"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Letter of Agreement of Patnership"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done7"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Rent Agreement of firm/Shop"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="7dp">
+
+            <Button
+                android:id="@+id/button_chose_d8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done8"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Invoce of Weighs Mesures and Weighing and Measuring instrumrnts "
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/button_d9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done9"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Verification Certificate from Legal Metrology Depertment Weighs Measures and Weighing and Measuring instruments obtained from deler from whom he/she/they purchased"
+            android:textColor="@color/blue" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done10"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+    </LinearLayout>
+</ScrollView>
