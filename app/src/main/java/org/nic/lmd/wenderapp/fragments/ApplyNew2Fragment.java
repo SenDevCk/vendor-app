@@ -302,10 +302,10 @@ public class ApplyNew2Fragment extends Fragment {
         if (designation_f2 == null) {
             Toast.makeText(getActivity(), "Select Designation", Toast.LENGTH_SHORT).show();
             view_name = sp_desig;
-        } else if (!edit_name_f2.getText().toString().trim().matches(GlobalVariable.CITY_PATTERN)) {
+        } else if (edit_name_f2.getText().toString().trim().length()<3) {
             edit_name_f2.setError("Enter Valid Full Name");
             view_name = edit_name_f2;
-        } else if (!edit_fname_f2.getText().toString().trim().matches(GlobalVariable.CITY_PATTERN)) {
+        } else if (edit_fname_f2.getText().toString().trim().length()<3) {
             edit_fname_f2.setError("Enter Valid Father/Mother/Husband Name");
             view_name = edit_fname_f2;
         } else if (!validateAadharNumber(edit_adhar_f2.getText().toString().trim())) {
