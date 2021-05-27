@@ -458,24 +458,31 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
             case R.id.button_chose_d5 :
                 PICK_PDF_REQUEST = 5;
                 showFileChooser();
+                break;
             case R.id.button_chose_d6 :
                 PICK_PDF_REQUEST = 6;
                 showFileChooser();
+                break;
             case R.id.button_chose_d7 :
                 PICK_PDF_REQUEST = 7;
                 showFileChooser();
+                break;
             case R.id.button_chose_d8 :
                 PICK_PDF_REQUEST = 8;
                 showFileChooser();
+                break;
             case R.id.button_chose_d9 :
                 PICK_PDF_REQUEST = 9;
                 showFileChooser();
+                break;
             case R.id.button_chose_d10 :
                 PICK_PDF_REQUEST = 10;
                 showFileChooser();
+                break;
             case R.id.button_chose_d11 :
                 PICK_PDF_REQUEST = 11;
                 showFileChooser();
+                break;
             default:
                 UploadFileService.bindTicker(new TickHandler() {
                     @Override
