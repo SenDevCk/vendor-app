@@ -10,7 +10,7 @@ public class Urls_this_pro {
     //public static final String baseURL="http://192.168.0.151:65000/api/";
    
     //live
-    public static final String baseURL="https://maaptaul.bih.nic.in/app/";
+    public static final String baseURL="https://wemmis.bih.nic.in/app/";
 
     public static final String LOG_IN_URL = baseURL+"vendor/login";
     public static final String LOAD_REGISTER = baseURL+"user/update";

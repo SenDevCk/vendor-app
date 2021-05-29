@@ -21,10 +21,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.nic.lmd.wenderapp.R;
 import org.nic.lmd.wenderapp.adapters.BillingDetailsAdapter;
+import org.nic.lmd.wenderapp.adapters.DocumentRecyclerAdapter;
 import org.nic.lmd.wenderapp.adapters.PatnerRecyclerAdapter;
 import org.nic.lmd.wenderapp.asynctask.VenderDataForBillingLoader;
 import org.nic.lmd.wenderapp.asynctask.VenderDataSingle;
@@ -49,9 +51,10 @@ public class ApplicationBillingDetailsActivity extends AppCompatActivity impleme
     RecyclerView recyclerView, list_all_patners, list_documents;
     BillingDetailsAdapter billingDetailsAdapter;
     PatnerRecyclerAdapter patnerRecyclerAdapter;
+    DocumentRecyclerAdapter documentRecyclerAdapter;
     private int mYear, mMonth, mDay;
     DatePickerDialog datedialog;
-    TextView tv_com_date,tv_vid,tv_name,tv_add_ven,tv_pre_type;
+    TextView tv_com_date,tv_vid,tv_name,tv_add_ven,tv_pre_type,text_no_doc;
     ImageView bt_com_date;
     TextView text_total_vf, text_total_af, text_total_ur, text_total_cc, text_total_co, text_grand_total;
 
@@ -88,6 +91,7 @@ public class ApplicationBillingDetailsActivity extends AppCompatActivity impleme
             }
         });
 
+        text_no_doc = findViewById(R.id.text_no_doc);
         list_documents = findViewById(R.id.list_documents);
         list_all_patners = findViewById(R.id.list_all_patners);
         recyclerView = findViewById(R.id.list_denomination_bill);
@@ -223,6 +227,23 @@ public class ApplicationBillingDetailsActivity extends AppCompatActivity impleme
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(billingDetailsAdapter);
+
+        try {
+            JSONArray jsonArray = jsonObject.getJSONArray("docs");
+            if (jsonArray.length() > 0) {
+                text_no_doc.setText("");
+                list_documents.invalidate();
+                documentRecyclerAdapter = new DocumentRecyclerAdapter(jsonArray, ApplicationBillingDetailsActivity.this);
+                RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(ApplicationBillingDetailsActivity.this);
+                list_documents.setLayoutManager(mLayoutManager3);
+                list_documents.setItemAnimator(new DefaultItemAnimator());
+                list_documents.setAdapter(documentRecyclerAdapter);
+            }else{
+                text_no_doc.setText("No Documents Found !");
+            }
+        } catch (Exception e) {
+            Log.e("json-error", e.getMessage());
+        }
     }
 
     @Override

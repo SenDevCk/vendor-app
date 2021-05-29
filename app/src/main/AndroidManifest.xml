@@ -96,7 +96,7 @@
         <activity
             android:name=".activities.LoadUrlActivity"
             android:screenOrientation="portrait" />
-        <provider
+        <!--<provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.mydomain.fileprovider"
             android:exported="false"
@@ -104,7 +104,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
+        </provider>-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="org.nic.lmd.wenderapp.fileprovider"

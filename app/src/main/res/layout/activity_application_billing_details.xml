@@ -227,15 +227,21 @@
                     android:textColor="@android:color/black" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list_documents"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_all_patners"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-
+                <TextView
+                    android:id="@+id/text_no_doc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:text="No documents found"
+                    android:textColor="@android:color/holo_red_dark"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_documents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_denomination_bill"
                     android:layout_width="match_parent"

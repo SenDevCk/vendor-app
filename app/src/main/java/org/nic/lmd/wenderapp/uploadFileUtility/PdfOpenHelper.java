@@ -30,9 +30,9 @@ public class PdfOpenHelper {
         Observable.fromCallable(new Callable<File>() {
             @Override
             public File call() throws Exception {
-                dialog=new ProgressDialog(activity);
-                dialog.setMessage("Loading file");
-                dialog.show();
+                //dialog=new ProgressDialog(activity);
+                //dialog.setMessage("Loading file");
+                //dialog.show();
                 try {
                     URL url = new URL(pdfUrl);
                     URLConnection connection = url.openConnection();
@@ -68,19 +68,19 @@ public class PdfOpenHelper {
                 .subscribe(new Subscriber<File>() {
                     @Override
                     public void onCompleted() {
-                       if (dialog.isShowing())dialog.dismiss();
+                       //if (dialog.isShowing())dialog.dismiss();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (dialog.isShowing())dialog.dismiss();
+                        //if (dialog.isShowing())dialog.dismiss();
                         e.printStackTrace();
                         Log.e("error",""+e.getMessage());
                     }
 
                     @Override
                     public void onNext(File file) {
-                        if (dialog.isShowing())dialog.dismiss();
+                        //if (dialog.isShowing())dialog.dismiss();
                         //String authority = activity.getApplicationContext().getPackageName() + ".fileprovider";
                         Uri uriToFile = FileProvider.getUriForFile(activity, "org.nic.lmd.wenderapp.fileprovider", file);
                         Intent shareIntent = new Intent(Intent.ACTION_VIEW);
