@@ -316,8 +316,8 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                         //String ven_id = jsonObject.getString("status").split(":")[1].substring(0,9);
                         long c = new DataBaseHelper(activity).saveVender(vid, CommonPref.getUserDetails(activity).getApplicantId().trim());
                         if (c <= 0) {
-                            Log.e("log : ", "Vender Id not saved in UploadTradorService(line 249)");
-                            Toast.makeText(activity, "Vender Id not saved in UploadTradorService", Toast.LENGTH_SHORT).show();
+                            Log.e("log : ", "Vendor Id not saved in UploadTradorService(line 249)");
+                            Toast.makeText(activity, "Vendor Id not saved in UploadTradorService", Toast.LENGTH_SHORT).show();
                         } else {
                             FrameLayout frame_reg = (FrameLayout) activity.findViewById(R.id.frame_ap_new);
                             UploadDocumentFragment applyNew1Fragment = UploadDocumentFragment.newInstance(vid, "");

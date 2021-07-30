@@ -9,24 +9,15 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -66,7 +57,7 @@ public class ApplyNew5Fragment extends Fragment {
     ScrollView scroll_od_f5;
     private View view_name;
     private String message = "";
-    TextInputLayout text_ip_qt;
+    TextInputLayout text_ip_qt,text_evalue;
 
     ArrayList<Nozzle> nozzles = new ArrayList<>();
 
@@ -122,6 +113,7 @@ public class ApplyNew5Fragment extends Fragment {
 
     private void initUI(View rootview) {
         text_ip_qt = rootview.findViewById(R.id.text_ip_qt);
+        text_evalue = rootview.findViewById(R.id.text_evalue);
         text_all_ins = rootview.findViewById(R.id.text_all_ins);
         edit_quantity = rootview.findViewById(R.id.edit_quantity);
         edit_gst = rootview.findViewById(R.id.edit_gst);
@@ -158,54 +150,48 @@ public class ApplyNew5Fragment extends Fragment {
         save_button = rootview.findViewById(R.id.button_save_cont);
 
 
-        button_add_ins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validate()) {
-                    InstrumentEntity instrumentEntity = new InstrumentEntity();
-                    instrumentEntity.setPro_id(pro_id.trim());
-                    instrumentEntity.setCat_id(cat_id.trim());
-                    instrumentEntity.setCap_id(cap_id.trim());
-                    instrumentEntity.setQuantity(edit_quantity.getText().toString().trim());
-                    instrumentEntity.setIns_class(class_id);
-                    instrumentEntity.setM_or_brand(edit_gst.getText().toString().trim());
-                    instrumentEntity.setCap_min(edit_cap_min.getText().toString().trim());
-                    instrumentEntity.setCap_max(edit_cap_max.getText().toString().trim());
-                    instrumentEntity.setModel_no(edit_mod_no.getText().toString().trim());
-                    instrumentEntity.setSer_no(edit_ser_no.getText().toString().trim());
-                    instrumentEntity.setE_val(edit_eval.getText().toString().trim());
-                    instrumentEntity.setVal_year(validity_id.trim());
-                    instrumentEntity.setNozzles(nozzles);
-                    long ins = new DataBaseHelper(getActivity()).addInstrument(instrumentEntity);
-                    if (ins > 0) {
-                        Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
-                        nozzles.clear();
-                    } else {
-                        Toast.makeText(getActivity(), "Not Saved", Toast.LENGTH_SHORT).show();
-                    }
-                    showData();
+        button_add_ins.setOnClickListener(view -> {
+            if (validate()) {
+                InstrumentEntity instrumentEntity = new InstrumentEntity();
+                instrumentEntity.setPro_id(pro_id.trim());
+                instrumentEntity.setCat_id(cat_id.trim());
+                instrumentEntity.setCap_id(cap_id.trim());
+                instrumentEntity.setQuantity(edit_quantity.getText().toString().trim());
+                instrumentEntity.setIns_class(class_id);
+                instrumentEntity.setM_or_brand(edit_gst.getText().toString().trim());
+                instrumentEntity.setCap_min(edit_cap_min.getText().toString().trim());
+                instrumentEntity.setCap_max(edit_cap_max.getText().toString().trim());
+                instrumentEntity.setModel_no(edit_mod_no.getText().toString().trim());
+                instrumentEntity.setSer_no(edit_ser_no.getText().toString().trim());
+                instrumentEntity.setE_val(edit_eval.getText().toString().trim());
+                instrumentEntity.setVal_year(validity_id.trim());
+                instrumentEntity.setNozzles(nozzles);
+                long ins = new DataBaseHelper(getActivity()).addInstrument(instrumentEntity);
+                if (ins > 0) {
+                    Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
+                    nozzles.clear();
                 } else {
-                    Utiilties.scrollToView(scroll_od_f5, view_name);
-                    Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Not Saved", Toast.LENGTH_SHORT).show();
                 }
+                showData();
+            } else {
+                Utiilties.scrollToView(scroll_od_f5, view_name);
+                Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
             }
         });
 
-        save_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DataBaseHelper db = new DataBaseHelper(getActivity());
-                if ((db.getInstrumentAddedCount() + db.getAddedWeightCount()) < 1) {
-                    Toast.makeText(getActivity(), "Please add weight or Instrument Details !", Toast.LENGTH_SHORT).show();
-                } else if (!Utiilties.isOnline(getActivity())) {
-                    Toast.makeText(getActivity(), "Internet not avalable !", Toast.LENGTH_SHORT).show();
+        save_button.setOnClickListener(view -> {
+            DataBaseHelper db = new DataBaseHelper(getActivity());
+            if ((db.getInstrumentAddedCount() + db.getAddedWeightCount()) < 1) {
+                Toast.makeText(getActivity(), "Please add weight or Instrument Details !", Toast.LENGTH_SHORT).show();
+            } else if (!Utiilties.isOnline(getActivity())) {
+                Toast.makeText(getActivity(), "Internet not avalable !", Toast.LENGTH_SHORT).show();
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+                    new UploadTradorService(getActivity(), "", getActivity().getIntent()).execute();
                 } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
-                        new UploadTradorService(getActivity(), "", getActivity().getIntent()).execute();
-                    } else {
-                        Log.d("error", "Minimum SDK Version CUPCAKE");
-                        Toast.makeText(getActivity(), "Minimum SDK Version CUPCAKE", Toast.LENGTH_SHORT).show();
-                    }
+                    Log.d("error", "Minimum SDK Version CUPCAKE");
+                    Toast.makeText(getActivity(), "Minimum SDK Version CUPCAKE", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -255,13 +241,10 @@ public class ApplyNew5Fragment extends Fragment {
             text_all_ins.setText("" + count_ins);
         else text_all_ins.setText("0");
         Utiilties.didTapButton(text_all_ins, getActivity());
-        text_all_ins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(text_all_ins.getText().toString().trim()) > 0) {
-                    Intent intent = new Intent(getActivity(), InstrumetAddedActivity.class);
-                    startActivity(intent);
-                }
+        text_all_ins.setOnClickListener(view -> {
+            if (Integer.parseInt(text_all_ins.getText().toString().trim()) > 0) {
+                Intent intent = new Intent(getActivity(), InstrumetAddedActivity.class);
+                startActivity(intent);
             }
         });
         //text_nozz_count.setText("" + nozzles.size());
@@ -321,10 +304,16 @@ public class ApplyNew5Fragment extends Fragment {
                 } else {
                     sp_valid.setEnabled(true);
                     cat_id = insCategoryEntities.get(i - 1).getValue().trim();
-                    if (cat_id.equals("14")) {
+                     if(cat_id.equals("2")){
+                         text_evalue.setHint("d-value");
+                    }
+                    else if (cat_id.equals("14")) {
                         text_ip_qt.setHint("Capacity of Tank in Litres *");
+                    }else if(cat_id.equals("22")){
+                        edit_cap_min.setVisibility(View.GONE);
                     } else {
                         text_ip_qt.setHint("Quantity *");
+                        text_evalue.setHint("e-value");
                     }
                     sp_valid.setSelection(((ArrayAdapter<String>) sp_valid.getAdapter()).getPosition(insCategoryEntities.get(i - 1).getValidity()));
                     sp_valid.setEnabled(false);
@@ -363,8 +352,10 @@ public class ApplyNew5Fragment extends Fragment {
                     if (cat_id.equals("21") && cap_id.equals("229")) {
                         text_ip_qt.setHint("Capacity of Tank in Litres *");
                     } else if ((cat_id.equals("16") && cap_id.equals("219")) || (cat_id.equals("19") && cap_id.equals("225")) || (cat_id.equals("22") && cap_id.equals("230"))) {
-                        text_ip_qt.setHint("No.s of Totlizers *");
-                    } else {
+                        text_ip_qt.setHint("No of Totlizers *");
+                        edit_cap_min.setVisibility(View.GONE);
+                        edit_eval.setVisibility(View.GONE);
+                    }else {
                         text_ip_qt.setHint("Quantity *");
                     }
 
@@ -568,6 +559,8 @@ public class ApplyNew5Fragment extends Fragment {
                     }
                 });
     }
+
+
 
     /*private class NozzleRecyclerAdapter extends RecyclerView.Adapter<NozzleRecyclerAdapter.MyViewHolder> {
 

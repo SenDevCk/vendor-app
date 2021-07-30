@@ -172,7 +172,7 @@
                             android:layout_margin="10dp"
                             android:orientation="vertical">
                             <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/sp_companies"
+                                android:id="@+id/sp_contries"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"

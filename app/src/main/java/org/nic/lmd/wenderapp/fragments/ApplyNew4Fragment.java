@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
@@ -56,7 +57,7 @@ public class ApplyNew4Fragment extends Fragment {
     LinearLayout ll_min_max,ll_entry_tank;
     String min_val = "0", max_val = "0";
     AppCompatEditText edit_tank_reg_no,edit_tank_eng_no,edit_tank_chechis,edit_tank_ow_name;
-    AppCompatSpinner sp_companies;
+    AppCompatSpinner sp_contries;
     String country="";
 
     public ApplyNew4Fragment() {
@@ -78,7 +79,7 @@ public class ApplyNew4Fragment extends Fragment {
         edit_tank_eng_no =  getActivity().findViewById(R.id.edit_tank_eng_no);
         edit_tank_chechis =  getActivity().findViewById(R.id.edit_tank_chechis);
         edit_tank_ow_name =  getActivity().findViewById(R.id.edit_tank_ow_name);
-        sp_companies =  getActivity().findViewById(R.id.sp_companies);
+        sp_contries =  getActivity().findViewById(R.id.sp_contries);
         edit_set_no =  getActivity().findViewById(R.id.edit_set_no);
         ll_single =  getActivity().findViewById(R.id.ll_single);
         frame_sel_type =  getActivity().findViewById(R.id.frame_sel_type);
@@ -198,6 +199,7 @@ public class ApplyNew4Fragment extends Fragment {
             vehicleTankDetail.setCountry(country);
             long c=new DataBaseHelper(getActivity()).addTank(vehicleTankDetail);
             if (c>0){
+                setTotalAdded();
                 Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getActivity(), "Not Saved", Toast.LENGTH_SHORT).show();
@@ -218,7 +220,7 @@ public class ApplyNew4Fragment extends Fragment {
             if (cou_to2<=0) {
                 text_get_all.setText("" + cou_to);
             }else{
-                text_get_all.setText("" + (cou_to+cou_to2-1));
+                text_get_all.setText("" + cou_to2);
             }
         } else {
             text_get_all.setText("0");
@@ -339,14 +341,16 @@ public class ApplyNew4Fragment extends Fragment {
                         sp_sel_type.setSelection(1);
                         sp_sel_type.setEnabled(false);
                         if (cat_id.equals("19")) {
-                            ll_entry_tank.setVisibility(View.VISIBLE);
-                            initialiseTankDetails();
+                            dialogForClearWeightAndInstrument();
                         } else {
                             ll_entry_tank.setVisibility(View.GONE);
                         }
                     }else{
                         sp_sel_type.setEnabled(true);
                         sp_sel_type.setSelection(0);
+                        if (new DataBaseHelper(getActivity()).getTankcount()>0){
+                            dialogForClearTanks();
+                        }
                     }
                 }
                 maxdenominationBinding();
@@ -358,6 +362,9 @@ public class ApplyNew4Fragment extends Fragment {
                 //sp_sel_type.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void dialogForClearTanks() {
     }
 
     private void selectionTypeBinding() {
@@ -384,14 +391,14 @@ public class ApplyNew4Fragment extends Fragment {
     }
 
     private void CountyBinding(){
-        sp_companies.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, new String[]{"India","Nepal"}));
-        sp_companies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_contries.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, new String[]{"India","Nepal"}));
+        sp_contries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i <= 0) {
-
+                  country="";
                 }  else {
-
+                    country=adapterView.getItemAtPosition(i).toString();
                 }
             }
             @Override
@@ -402,11 +409,12 @@ public class ApplyNew4Fragment extends Fragment {
     }
 
     private void initialiseTankDetails(){
-        CountyBinding();
+         CountyBinding();
         edit_tank_chechis.setText("");
         edit_tank_eng_no.setText("");
         edit_tank_ow_name.setText("");
         edit_tank_reg_no.setText("");
+        sp_contries.setSelection(0);
     }
 
     private void validityBinding() {
@@ -435,6 +443,22 @@ public class ApplyNew4Fragment extends Fragment {
             }
         });
 
+    }
+    private void dialogForClearWeightAndInstrument() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Warning")
+                .setMessage("This selection will delete all Weight and Instrument Selected.Are you ready to delete ?")
+                .setPositiveButton(android.R.string.ok, (dialog, which) ->{
+                    new DataBaseHelper(getActivity()).deleteAllInstruments();
+                    new DataBaseHelper(getActivity()).updateweightDenomination();
+                    new DataBaseHelper(getActivity()).deleteAllNozzle();
+                    ll_entry_tank.setVisibility(View.VISIBLE);
+                    initialiseTankDetails();
+                    dialog.dismiss();
+                }
+
+
+                );
     }
 
     @Override
