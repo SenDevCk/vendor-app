@@ -79,15 +79,12 @@ public class ApplicationBillingDetailsActivity extends AppCompatActivity impleme
         });
 
         rd_gp_place =  findViewById(R.id.rd_gp_place);
-        rd_gp_place.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // find which radio button is selected
-                if (checkedId == R.id.radio1) {
-                    place = "OWNER OFFICE";
-                } else {
-                    place = "LMO OFFICE";
-                }
+        rd_gp_place.setOnCheckedChangeListener((group, checkedId) -> {
+            // find which radio button is selected
+            if (checkedId == R.id.radio1) {
+                place = "OWNER OFFICE";
+            } else {
+                place = "LMO OFFICE";
             }
         });
 

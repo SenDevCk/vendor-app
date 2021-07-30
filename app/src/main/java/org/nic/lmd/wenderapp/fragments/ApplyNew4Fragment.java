@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,19 +31,21 @@ import org.nic.lmd.wenderapp.activities.WeightDenominationActivity;
 import org.nic.lmd.wenderapp.entities.DenomintionEntity;
 import org.nic.lmd.wenderapp.entities.ProposalTypeEntity;
 import org.nic.lmd.wenderapp.entities.TypeOfPump;
+import org.nic.lmd.wenderapp.entities.VehicleTankDetails;
 import org.nic.lmd.wenderapp.entities.WeightCategoriesEntity;
 import org.nic.lmd.wenderapp.mdatabase.DataBaseHelper;
 import org.nic.lmd.wenderapp.utilities.MyBounceInterpolator;
 import org.nic.lmd.wenderapp.utilities.Utiilties;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ApplyNew4Fragment extends Fragment {
 
 
     FrameLayout frameLayout, ll_single,frame_sel_type;
     FragmentManager fragmentManager;
-    Button button_next4, button_adddenomination;
+    Button button_next4, button_adddenomination,add_tank_detils;
     Spinner sp_proposal_type_f4, sp_cat_f4, sp_valid, sp_sel_type;
     Spinner sp_min_den, sp_max_den;
     TextView sp_denomination;
@@ -49,8 +53,11 @@ public class ApplyNew4Fragment extends Fragment {
     TextView text_get_all;
     EditText edit_set_no;
     String[] sel_type = {"-- SELECT TYPE --", "Individual", "Set"};
-    LinearLayout ll_min_max;
+    LinearLayout ll_min_max,ll_entry_tank;
     String min_val = "0", max_val = "0";
+    AppCompatEditText edit_tank_reg_no,edit_tank_eng_no,edit_tank_chechis,edit_tank_ow_name;
+    AppCompatSpinner sp_companies;
+    String country="";
 
     public ApplyNew4Fragment() {
         // Required empty public constructor
@@ -67,12 +74,19 @@ public class ApplyNew4Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        edit_tank_reg_no =  getActivity().findViewById(R.id.edit_tank_reg_no);
+        edit_tank_eng_no =  getActivity().findViewById(R.id.edit_tank_eng_no);
+        edit_tank_chechis =  getActivity().findViewById(R.id.edit_tank_chechis);
+        edit_tank_ow_name =  getActivity().findViewById(R.id.edit_tank_ow_name);
+        sp_companies =  getActivity().findViewById(R.id.sp_companies);
         edit_set_no =  getActivity().findViewById(R.id.edit_set_no);
         ll_single =  getActivity().findViewById(R.id.ll_single);
         frame_sel_type =  getActivity().findViewById(R.id.frame_sel_type);
         ll_single.setVisibility(View.GONE);
         ll_min_max =  getActivity().findViewById(R.id.ll_min_max);
+        ll_entry_tank =  getActivity().findViewById(R.id.ll_entry_tank);
         ll_min_max.setVisibility(View.GONE);
+        ll_entry_tank.setVisibility(View.GONE);
         text_get_all =  getActivity().findViewById(R.id.text_get_all);
         text_get_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +163,9 @@ public class ApplyNew4Fragment extends Fragment {
                 }
             }
         });
+        add_tank_detils.setOnClickListener((View v)->{
+            addTankDetails();
+        });
         initialiseSpinnerPro();
         categorySpinnerBinding("0");
         selectionTypeBinding();
@@ -156,6 +173,36 @@ public class ApplyNew4Fragment extends Fragment {
         maxdenominationBinding();
         validityBinding();
         setTotalAdded();
+
+    }
+
+    private void addTankDetails() {
+        System.out.println("under addTankDetails");
+        if (Objects.requireNonNull(edit_tank_reg_no.getText()).toString().trim().equals("")){
+            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.reg_no), Toast.LENGTH_SHORT).show();
+        }else if (Objects.requireNonNull(edit_tank_eng_no.getText()).toString().trim().equals("")){
+            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.eng_no), Toast.LENGTH_SHORT).show();
+        }else if (Objects.requireNonNull(edit_tank_chechis.getText()).toString().trim().equals("")){
+            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.chechis_number), Toast.LENGTH_SHORT).show();
+        }else if (Objects.requireNonNull(edit_tank_ow_name.getText()).toString().trim().equals("")){
+            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.firm_own_name), Toast.LENGTH_SHORT).show();
+        }else if (country.trim().equals("")){
+            Toast.makeText(getActivity(), "Select Country", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            VehicleTankDetails vehicleTankDetail=new VehicleTankDetails();
+            vehicleTankDetail.setRegNumber(edit_tank_reg_no.getText().toString().trim());
+            vehicleTankDetail.setChechisNumber(edit_tank_reg_no.getText().toString().trim());
+            vehicleTankDetail.setEngineNumber(edit_tank_reg_no.getText().toString().trim());
+            vehicleTankDetail.setOwnerFirmName(edit_tank_reg_no.getText().toString().trim());
+            vehicleTankDetail.setCountry(country);
+            long c=new DataBaseHelper(getActivity()).addTank(vehicleTankDetail);
+            if (c>0){
+                Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getActivity(), "Not Saved", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -166,8 +213,13 @@ public class ApplyNew4Fragment extends Fragment {
 
     private void setTotalAdded() {
         long cou_to = new DataBaseHelper(getActivity()).getAddedWeightCount();
+        long cou_to2 = new DataBaseHelper(getActivity()).getTankcount();
         if (cou_to > 0) {
-            text_get_all.setText("" + cou_to);
+            if (cou_to2<=0) {
+                text_get_all.setText("" + cou_to);
+            }else{
+                text_get_all.setText("" + (cou_to+cou_to2-1));
+            }
         } else {
             text_get_all.setText("0");
         }
@@ -283,6 +335,19 @@ public class ApplyNew4Fragment extends Fragment {
                     sp_valid.setEnabled(true);
                     sp_valid.setSelection(((ArrayAdapter<String>) sp_valid.getAdapter()).getPosition(weightCategories.get(i - 1).getValidity().trim()));
                     sp_valid.setEnabled(false);
+                    if (Integer.parseInt(cat_id)>10) {
+                        sp_sel_type.setSelection(1);
+                        sp_sel_type.setEnabled(false);
+                        if (cat_id.equals("19")) {
+                            ll_entry_tank.setVisibility(View.VISIBLE);
+                            initialiseTankDetails();
+                        } else {
+                            ll_entry_tank.setVisibility(View.GONE);
+                        }
+                    }else{
+                        sp_sel_type.setEnabled(true);
+                        sp_sel_type.setSelection(0);
+                    }
                 }
                 maxdenominationBinding();
                 mindenominationBinding();
@@ -316,6 +381,32 @@ public class ApplyNew4Fragment extends Fragment {
 
             }
         });
+    }
+
+    private void CountyBinding(){
+        sp_companies.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, new String[]{"India","Nepal"}));
+        sp_companies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i <= 0) {
+
+                }  else {
+
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void initialiseTankDetails(){
+        CountyBinding();
+        edit_tank_chechis.setText("");
+        edit_tank_eng_no.setText("");
+        edit_tank_ow_name.setText("");
+        edit_tank_reg_no.setText("");
     }
 
     private void validityBinding() {

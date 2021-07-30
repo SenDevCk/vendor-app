@@ -26,7 +26,7 @@ import org.nic.lmd.wenderapp.mdatabase.DataBaseHelper;
  * Created by chandan on 30.09.2020
  */
 
-public class RenewalWeightAdapter extends RecyclerView.Adapter<RenewalWeightAdapter.MyViewHolder> {
+public class  RenewalWeightAdapter extends RecyclerView.Adapter<RenewalWeightAdapter.MyViewHolder> {
 
     Activity activity;
    JSONArray jsonArray;

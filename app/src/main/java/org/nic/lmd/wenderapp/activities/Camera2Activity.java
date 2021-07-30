@@ -171,18 +171,8 @@ public class Camera2Activity extends AppCompatActivity {
 		}
 	};
 
-	ShutterCallback shutterCallback = new ShutterCallback() {
-		@Override
-		public void onShutter() {
-			Log.d(TAG, "onShutter'd");
-		}
-	};
-	PictureCallback rawCallback = new PictureCallback() {
-		@Override
-		public void onPictureTaken(byte[] data, Camera camera) {
-			Log.d(TAG, "onPictureTaken - raw");
-		}
-	};
+	ShutterCallback shutterCallback = () -> Log.d(TAG, "onShutter'd");
+	PictureCallback rawCallback = (data, camera) -> Log.d(TAG, "onPictureTaken - raw");
 
 	public void onCaptureClick(View view) {
 		// System.gc();
@@ -231,14 +221,15 @@ public class Camera2Activity extends AppCompatActivity {
 		CompressedImageByteArray = compressedImageByteArray;
 	}
 
+	@SuppressLint("MissingSuperCall")
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		switch (requestCode) {
 			case PERMISSIONS_MULTIPLE_REQUEST:
 				if (grantResults.length > 0) {
-					boolean mPermission =(grantResults[0] == PackageManager.PERMISSION_GRANTED);
-					if(mPermission)
-					{
+					boolean mPermission = (grantResults[0] == PackageManager.PERMISSION_GRANTED);
+					if (mPermission) {
 						initializeCamera();
 						super.onResume();
 					} else {

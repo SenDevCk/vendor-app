@@ -96,6 +96,9 @@
         <activity
             android:name=".activities.LoadUrlActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.TankDetailsActivity"
+            android:screenOrientation="portrait" />
         <!--<provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.mydomain.fileprovider"

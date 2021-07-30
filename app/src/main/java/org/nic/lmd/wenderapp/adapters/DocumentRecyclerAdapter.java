@@ -70,15 +70,12 @@ public class DocumentRecyclerAdapter extends RecyclerView.Adapter<DocumentRecycl
             SpannableString content = new SpannableString(obj.getString("documentId")+" "+tokens[tokens.length-1]);
             content.setSpan(new UnderlineSpan(), 0,content.length(), 0);
             holder.text_doc_name.setText(content);
-            holder.text_doc_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //activity.startActivity(new Intent(activity, LoadUrlActivity.class).putExtra("url","http://192.168.1.20:65001/app/vendor"+obj.docUrl));
-                    try {
-                        PdfOpenHelper.openPdfFromUrl(Urls_this_pro.baseURL + obj.getString("docUrl"), activity);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+            holder.text_doc_name.setOnClickListener(v -> {
+                //activity.startActivity(new Intent(activity, LoadUrlActivity.class).putExtra("url","http://192.168.1.20:65001/app/vendor"+obj.docUrl));
+                try {
+                    PdfOpenHelper.openPdfFromUrl(Urls_this_pro.baseURL + obj.getString("docUrl"), activity);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             });
             setAnimation(holder.itemView, position);

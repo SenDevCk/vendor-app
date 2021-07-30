@@ -26,12 +26,7 @@ public class NozzlesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NozzlesActivity.super.onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> NozzlesActivity.super.onBackPressed());
         listView =  findViewById(R.id.list_partner);
         listView.setAdapter(new NozzleAdapter(NozzlesActivity.this));
     }

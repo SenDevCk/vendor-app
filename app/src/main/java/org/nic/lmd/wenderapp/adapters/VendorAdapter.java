@@ -117,7 +117,7 @@ public class VendorAdapter extends BaseAdapter {
                     viewHolder.text_status.setTextColor(activity.getResources().getColor(R.color.orange));
                 } else if (jsonObject.getString("status").equals("CAL")) {
                     viewHolder.ll_renew.setVisibility(View.VISIBLE);
-                    viewHolder.button_pay.setVisibility(View.VISIBLE);
+                    //viewHolder.button_pay.setVisibility(View.VISIBLE);
                     viewHolder.text_status.setText("Ready for Payment");
                     viewHolder.text_status.setTextColor(activity.getResources().getColor(R.color.greenDark));
                 } else if (jsonObject.getString("status").equals("PMR")) {
@@ -130,7 +130,7 @@ public class VendorAdapter extends BaseAdapter {
                 } else if (jsonObject.getString("status").equals("CRT")) {
                     viewHolder.ll_renew.setVisibility(View.VISIBLE);
                     viewHolder.button_renew.setVisibility(View.VISIBLE);
-                    viewHolder.button_cert.setVisibility(View.VISIBLE);
+                    //viewHolder.button_cert.setVisibility(View.G);
                     viewHolder.text_status.setText("Certificate Generated");
                     viewHolder.text_status.setTextColor(activity.getResources().getColor(R.color.greenDark));
                 } else {

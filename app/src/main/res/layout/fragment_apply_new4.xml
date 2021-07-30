@@ -121,7 +121,84 @@
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
                 </FrameLayout>
-
+                <LinearLayout
+                    android:id="@+id/ll_entry_tank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/darker_gray"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:textColor="@color/colorPrimaryLight"
+                        android:text="@string/tank_details"/>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edit_tank_reg_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/reg_no"
+                        android:textColorHighlight="@color/colorAccent"
+                        android:inputType="text"/>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edit_tank_eng_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/eng_no"
+                        android:textColorHighlight="@color/colorAccent"
+                        android:inputType="text"/>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edit_tank_chechis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/chechis_number"
+                        android:textColorHighlight="@color/colorAccent"
+                        android:inputType="text"/>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edit_tank_ow_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHighlight="@color/colorAccent"
+                        android:hint="@string/firm_own_name"
+                        android:inputType="text"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_weight=".6"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/sp_companies"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                 />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-7dp"
+                                android:layout_marginLeft="10dp"
+                                android:padding="2dp"
+                                android:background="@color/colorPrimary"
+                                android:text="@string/country"
+                                android:textColor="@color/white" />
+                        </FrameLayout>
+                        <Button
+                            android:id="@+id/add_tank_detils"
+                            android:layout_width="0dp"
+                            android:layout_weight=".5"
+                            android:layout_height="35dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/yellow_button"
+                            android:text="Add"
+                            android:layout_gravity="bottom"/>
+                    </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_min_max"
                     android:layout_width="match_parent"

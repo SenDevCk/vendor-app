@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -264,13 +262,9 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Really Exit ?")
                 .setMessage("Are you sure you want to exit?")
                 .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        MainActivity.super.onBackPressed();
-                        finish();
-                    }
-
+                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                    MainActivity.super.onBackPressed();
+                    finish();
                 }).create().show();
 
     }

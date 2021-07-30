@@ -3,6 +3,7 @@ package org.nic.lmd.wenderapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -13,11 +14,14 @@ import org.nic.lmd.wenderapp.adapters.WeightDenominationAdapter;
 import org.nic.lmd.wenderapp.mdatabase.DataBaseHelper;
 import org.nic.lmd.wenderapp.utilities.Utiilties;
 
+import java.util.Objects;
+
 public class WeightDenominationActivity extends AppCompatActivity implements View.OnClickListener {
 
     Toolbar toolbar;
     ListView listView;
     TextView clear_text,textView;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +32,9 @@ public class WeightDenominationActivity extends AppCompatActivity implements Vie
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WeightDenominationActivity.super.onBackPressed();
-
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> WeightDenominationActivity.super.onBackPressed());
         clear_text =  findViewById(R.id.clear_text);
         clear_text.setOnClickListener(this);
         textView =  findViewById(R.id.tv_added_cart);
@@ -47,6 +45,7 @@ public class WeightDenominationActivity extends AppCompatActivity implements Vie
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
         if (view.getId()==R.id.clear_text){

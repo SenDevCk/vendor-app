@@ -50,12 +50,7 @@ public class RenawalActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RenawalActivity.super.onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> RenawalActivity.super.onBackPressed());
 
         msg_instrument = findViewById(R.id.msg_instrument);
         msg_weight = findViewById(R.id.msg_weight);
@@ -64,52 +59,39 @@ public class RenawalActivity extends AppCompatActivity {
         recycler_instrument = findViewById(R.id.recycler_instrument);
         callService(getIntent().getStringExtra("venderid"));
 
-        button_renew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(RenawalActivity.this)
-                        .setTitle("Renew")
-                        .setMessage("Really want to renew")
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d("before", jsonObject.toString());
-                                int max_vc_id = 0;
+        button_renew.setOnClickListener(v -> new AlertDialog.Builder(RenawalActivity.this)
+                .setTitle("Renew")
+                .setMessage("Really want to renew")
+                .setNegativeButton(android.R.string.no, (dialog, which) -> dialog.dismiss())
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    Log.d("before", jsonObject.toString());
+                    int max_vc_id = 0;
 
-                                try {
-                                    JSONArray jsonArray_vc = jsonObject.getJSONArray("vcs");
-                                    for (int i = 0; i < jsonArray_vc.length(); i++) {
-                                        JSONObject jsonObject_vc = jsonArray_vc.getJSONObject(i);
-                                        if (max_vc_id < jsonObject_vc.getInt("vcId")) {
-                                            max_vc_id = jsonObject_vc.getInt("vcId");
-                                        }
-                                    }
-                                    JSONObject new_vc = new JSONObject();
-                                    new_vc.accumulate("nextVcDate", JSONObject.NULL);
-                                    new_vc.accumulate("vcDate", JSONObject.NULL);
-                                    new_vc.accumulate("vcId", max_vc_id + 1);
-                                    new_vc.accumulate("vcNumber", JSONObject.NULL);
-                                    new_vc.accumulate("vendorId", jsonObject.getString("vendorId"));
-                                    jsonObject.getJSONArray("vcs").put(jsonArray_vc.length(), new_vc);
-                                    manipulateDataForWeightAndInstrument(true, max_vc_id);
-                                    manipulateDataForWeightAndInstrument(false, max_vc_id);
-                                    jsonObject.put("status","RFR");
-                                    Log.d("json_manipulated", jsonObject.toString());
-                                } catch (Exception e) {
-                                    Log.e("json error", e.getMessage());
-                                }
-                                Log.d("resultent json \n", jsonObject.toString());
-                                new RenewalService(RenawalActivity.this,jsonObject).execute();
+                    try {
+                        JSONArray jsonArray_vc = jsonObject.getJSONArray("vcs");
+                        for (int i = 0; i < jsonArray_vc.length(); i++) {
+                            JSONObject jsonObject_vc = jsonArray_vc.getJSONObject(i);
+                            if (max_vc_id < jsonObject_vc.getInt("vcId")) {
+                                max_vc_id = jsonObject_vc.getInt("vcId");
                             }
-                        }).create().show();
-            }
-        });
+                        }
+                        JSONObject new_vc = new JSONObject();
+                        new_vc.accumulate("nextVcDate", JSONObject.NULL);
+                        new_vc.accumulate("vcDate", JSONObject.NULL);
+                        new_vc.accumulate("vcId", max_vc_id + 1);
+                        new_vc.accumulate("vcNumber", JSONObject.NULL);
+                        new_vc.accumulate("vendorId", jsonObject.getString("vendorId"));
+                        jsonObject.getJSONArray("vcs").put(jsonArray_vc.length(), new_vc);
+                        manipulateDataForWeightAndInstrument(true, max_vc_id);
+                        manipulateDataForWeightAndInstrument(false, max_vc_id);
+                        jsonObject.put("status","RFR");
+                        Log.d("json_manipulated", jsonObject.toString());
+                    } catch (Exception e) {
+                        Log.e("json error", e.getMessage());
+                    }
+                    Log.d("resultent json \n", jsonObject.toString());
+                    new RenewalService(RenawalActivity.this,jsonObject).execute();
+                }).create().show());
     }
 
     private void manipulateDataForWeightAndInstrument(boolean flag, int max_vc_id) {

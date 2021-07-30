@@ -35,12 +35,7 @@ public class ResitrationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ResitrationActivity.super.onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> ResitrationActivity.super.onBackPressed());
         frame_reg=findViewById(R.id.frame_reg);
         BusRegDetailsFragment homefragment = new BusRegDetailsFragment();
         fragmentManager=getSupportFragmentManager();

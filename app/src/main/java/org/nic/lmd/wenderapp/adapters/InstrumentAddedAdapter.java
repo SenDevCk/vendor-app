@@ -94,28 +94,22 @@ public class InstrumentAddedAdapter extends BaseAdapter {
         }else{
             viewHolder.show_Nozzles.setVisibility(View.VISIBLE);
         }
-        viewHolder.show_Nozzles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(activity, NozzlesActivity.class);
-                intent.putExtra("id",instrumentEntities.get(position).getId());
-                activity.startActivity(intent);
-            }
+        viewHolder.show_Nozzles.setOnClickListener(v -> {
+            Intent intent=new Intent(activity, NozzlesActivity.class);
+            intent.putExtra("id",instrumentEntities.get(position).getId());
+            activity.startActivity(intent);
         });
         viewHolder.remove=rootview.findViewById(R.id.remove_ins) ;
-        viewHolder.remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               long c=new DataBaseHelper(activity).deleteSingleInstrument(instrumentEntities.get(position).getId());
-               if (c>0) {
-                   instrumentEntities = new DataBaseHelper(activity).getInstrumentAdded();
-                   notifyDataSetChanged();
-                   textView.setText("" + new DataBaseHelper(activity).getInstrumentAddedCount());
-                   Utiilties.didTapButton(textView, activity);
-               }else{
-                   Log.e("error","instrument not deleted");
-               }
-            }
+        viewHolder.remove.setOnClickListener(view -> {
+           long c=new DataBaseHelper(activity).deleteSingleInstrument(instrumentEntities.get(position).getId());
+           if (c>0) {
+               instrumentEntities = new DataBaseHelper(activity).getInstrumentAdded();
+               notifyDataSetChanged();
+               textView.setText("" + new DataBaseHelper(activity).getInstrumentAddedCount());
+               Utiilties.didTapButton(textView, activity);
+           }else{
+               Log.e("error","instrument not deleted");
+           }
         });
         return rootview;
     }

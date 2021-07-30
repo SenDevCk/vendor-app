@@ -1,6 +1,7 @@
 package org.nic.lmd.wenderapp.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import org.nic.lmd.wenderapp.R;
+import org.nic.lmd.wenderapp.activities.TankDetailsActivity;
 import org.nic.lmd.wenderapp.activities.WeightDenominationActivity;
 import org.nic.lmd.wenderapp.entities.DenomintionEntity;
 import org.nic.lmd.wenderapp.entities.ProposalTypeEntity;
@@ -81,11 +83,7 @@ public class WeightDenominationAdapter extends BaseAdapter {
         viewHolder.cat_name =  rootview.findViewById(R.id.cat_name);
         WeightCategoriesEntity weightCategoriesEntity = new DataBaseHelper(activity).getCategoryById(denomintionEntities.get(position).getCategoryId().trim());
         final ProposalTypeEntity proposalTypeEntity = new DataBaseHelper(activity).getProByID(weightCategoriesEntity.getPro_id().trim());
-        if (weightCategoriesEntity.getId().equals("19")) {
-            viewHolder.text_qty.setText("Capacity of Each Compartment in Litres*");
-            viewHolder.text_qty.setTextSize(7);
-            viewHolder.text_qty.setTextColor(activity.getResources().getColor(R.color.colorPrimaryDark));
-        }
+
         viewHolder.cat_type.setText(proposalTypeEntity.getValue());
         viewHolder.cat_name.setText("" + weightCategoriesEntity.getValue());
         viewHolder.tv_inc.setText("" + denomintionEntities.get(position).getQuantity());
@@ -94,10 +92,15 @@ public class WeightDenominationAdapter extends BaseAdapter {
             this.val_year = denomintionEntities.get(position).getVal_year();
         }
         viewHolder.text_val.setText("Validity : " + val_year + " year");
-
-        viewHolder.img_inc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if (weightCategoriesEntity.getId().equals("19")) {
+            viewHolder.text_qty.setText("Capacity of Each Compartment in Litres*");
+            viewHolder.text_qty.setTextSize(7);
+            viewHolder.text_qty.setTextColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+            viewHolder.tv_inc.setOnClickListener(v -> {
+                activity.startActivity(new Intent(activity, TankDetailsActivity.class));
+            });
+        }else{
+            viewHolder.img_inc.setOnClickListener(view -> {
                 int incre = Integer.parseInt(viewHolder.tv_inc.getText().toString().trim());
                 incre = incre + 1;
                 viewHolder.tv_inc.setText("" + incre);
@@ -107,12 +110,9 @@ public class WeightDenominationAdapter extends BaseAdapter {
                 textView.setText("" + new DataBaseHelper(activity).getAddedWeightCount());
                 Utiilties.didTapButton(textView, activity);
 
-            }
-        });
+            });
 
-        viewHolder.img_dec.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            viewHolder.img_dec.setOnClickListener(view -> {
                 int decre = Integer.parseInt(viewHolder.tv_inc.getText().toString().trim());
                 if (decre > 0) {
                     if (Integer.parseInt(denomintionEntities.get(position).getIs_set())>0 && decre <= (Integer.parseInt(denomintionEntities.get(position).getSet_m())*Integer.parseInt(denomintionEntities.get(position).getIs_set()))) {
@@ -130,8 +130,9 @@ public class WeightDenominationAdapter extends BaseAdapter {
                         Utiilties.didTapButton(textView, activity);
                     }
                 }
-            }
-        });
+            });
+
+        }
 
         viewHolder.tog_denomination =  rootview.findViewById(R.id.tog_denomination);
         if (denomintionEntities.get(position).getChecked().equals("Y")) {

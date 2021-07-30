@@ -30,12 +30,7 @@ public class ApplyNewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ApplyNewActivity.super.onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> ApplyNewActivity.super.onBackPressed());
         frame_reg =  findViewById(R.id.frame_ap_new);
         if (getIntent().hasExtra("from")){
             UploadDocumentFragment applyNew1Fragment = UploadDocumentFragment.newInstance(getIntent().getStringExtra("ven_id"),"");

@@ -32,12 +32,7 @@ public class SelectClassActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SelectClassActivity.super.onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> SelectClassActivity.super.onBackPressed());
         listView =  findViewById(R.id.list_partner);
         listView.setAdapter(new InstrumentClassAdapter(SelectClassActivity.this, new DataBaseHelper(SelectClassActivity.this).getInsClass(0)));
     }

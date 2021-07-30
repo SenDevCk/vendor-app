@@ -1,8 +1,15 @@
 <resources>
-    <string name="app_name">eLMTB</string>
+    <string name="app_name">e-LMTB</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Legal Metrology Trader Bihar</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="reg_no">Registration Number</string>
+    <string name="eng_no">Engine Number</string>
+    <string name="firm_own_name">Firm/Owner Name</string>
+    <string name="chechis_number">Chechis Number</string>
+    <string name="country">Country</string>
+    <string name="tank_details">Vehicle Tank Details</string>
+    <string name="not_avalable">N/A</string>
 
 </resources>

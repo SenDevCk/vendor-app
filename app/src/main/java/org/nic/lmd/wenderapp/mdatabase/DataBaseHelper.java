@@ -40,6 +40,7 @@ import org.nic.lmd.wenderapp.entities.ProposalTypeEntity;
 import org.nic.lmd.wenderapp.entities.SubDivision;
 import org.nic.lmd.wenderapp.entities.ThanaEntity;
 import org.nic.lmd.wenderapp.entities.TypeOfPump;
+import org.nic.lmd.wenderapp.entities.VehicleTankDetails;
 import org.nic.lmd.wenderapp.entities.WeightCategoriesEntity;
 
 import java.io.File;
@@ -63,7 +64,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(Context context) {
 
-        super(context, DB_NAME, null, 1);
+        super(context, DB_NAME, null, 2);
         if (Build.VERSION.SDK_INT >= 29) {
             DB_PATH = context.getDatabasePath(DB_NAME).getPath();
         } else if (Build.VERSION.SDK_INT >= 21) {
@@ -226,20 +227,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        System.out.println("version-- "+"older--"+oldVersion+"newer"+newVersion);
         if (oldVersion >= newVersion) return;
         ClearAllTable(db);
         onCreate(db);
         if (oldVersion == 1) {
             Log.d("New Version", "Data can be upgraded");
-            //String CREATE_UNBILLEDCONSUMER_TABLE = "CREATE TABLE UNBILLEDCONSUMER (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,SUB_DIV_ID TEXT, CON_ID TEXT, ACT_NO TEXT, BOOK_NO TEXT, NAME TEXT, ADDRESS TEXT, LAST_PAY_DATE TEXT, USER_ID TEXT);";
-            //db.execSQL(CREATE_UNBILLEDCONSUMER_TABLE);
+            String CREATE_TANK_TABLE = "CREATE TABLE VEHICLE_TANK (v_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,reg_no TEXT,eng_no TEXT,chechis_no TEXT,firm_or_owner_name TEXT,country TEXT);";
+            db.execSQL(CREATE_TANK_TABLE);
         }
-
         Log.d("Sample Data", "onUpgrade	: " + newVersion);
     }
 
+
     public void ClearAllTable(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS ActivityGroup");
+        db.execSQL("DROP TABLE IF EXISTS DISTRICT");
+        db.execSQL("DROP TABLE IF EXISTS NATURE_OF_BUSINESS");
+        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
+        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
+        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
+        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
+        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
         db.execSQL("DROP TABLE IF EXISTS ActivityCode");
     }
 
@@ -2306,5 +2314,81 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
+
+    public long addTank(VehicleTankDetails vehicleTankDetail) {
+        final SQLiteDatabase db=this.getWritableDatabase();;
+        long c = 0;
+        try{
+                //vehicleTankDetails.stream().forEach((vehicleTankDetail)->{
+                ContentValues contentValues=new ContentValues();
+                contentValues.put("reg_no",vehicleTankDetail.getRegNumber());
+                contentValues.put("eng_no",vehicleTankDetail.getEngineNumber());
+                contentValues.put("chechis_no",vehicleTankDetail.getChechisNumber());
+                contentValues.put("firm_or_owner_name",vehicleTankDetail.getOwnerFirmName());
+                contentValues.put("country",vehicleTankDetail.getCountry());
+                c=db.insert("VEHICLE_TANK",null,contentValues);
+            //});
+        }catch (Exception e){
+            e.printStackTrace();
+            c=-1;
+        }finally {
+            db.close();
+        }
+        return c;
+    }
+
+    public long getTankcount(){
+        SQLiteDatabase db=null;
+        Cursor cursor=null;
+        long totalCount=0;
+        try{
+            db=this.getReadableDatabase();
+            cursor=db.rawQuery("select * from VEHICLE_TANK",null);
+            cursor.getCount();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            cursor.close();
+            db.close();
+        }
+        return totalCount;
+    }
+
+    public ArrayList<VehicleTankDetails> getTotalTank(){
+        ArrayList<VehicleTankDetails> vehicleTankDetails=new ArrayList<>();
+        SQLiteDatabase db=null;
+        Cursor cursor=null;
+        long totalCount=0;
+        try{
+            db=this.getReadableDatabase();
+            cursor=db.rawQuery("select * from VEHICLE_TANK",null);
+            VehicleTankDetails vehicleTankDetail=new VehicleTankDetails();
+            vehicleTankDetail.setRegNumber(cursor.isNull(cursor.getColumnIndex("reg_no"))?"":cursor.getString(cursor.getColumnIndex("reg_no")));
+            vehicleTankDetail.setEngineNumber(cursor.isNull(cursor.getColumnIndex("eng_no"))?"":cursor.getString(cursor.getColumnIndex("eng_no")));
+            vehicleTankDetail.setChechisNumber(cursor.isNull(cursor.getColumnIndex("chechis_no"))?"":cursor.getString(cursor.getColumnIndex("chechis_no")));
+            vehicleTankDetail.setOwnerFirmName(cursor.isNull(cursor.getColumnIndex("firm_or_owner_name"))?"":cursor.getString(cursor.getColumnIndex("firm_or_owner_name")));
+            vehicleTankDetail.setCountry(cursor.isNull(cursor.getColumnIndex("country"))?"":cursor.getString(cursor.getColumnIndex("country")));
+            vehicleTankDetail.setVid(cursor.isNull(cursor.getColumnIndex("v_id"))?0:cursor.getInt(cursor.getColumnIndex("v_id")));
+            vehicleTankDetails.add(vehicleTankDetail);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            cursor.close();
+            db.close();
+        }
+        return vehicleTankDetails;
+    }
+
+    public long deleteTankById(VehicleTankDetails tankDetail) {
+        long c = -1;
+        try {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+            c = sqLiteDatabase.delete("VEHICLE_TANK", "v_id=?", new String[]{String.valueOf(tankDetail.getVid())});
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("error", e.getMessage());
+        }
+        return c;
+    }
 
 }

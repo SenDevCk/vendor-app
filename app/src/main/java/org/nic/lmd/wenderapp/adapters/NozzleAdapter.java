@@ -58,17 +58,14 @@ public class NozzleAdapter extends BaseAdapter {
         viewHolder.tv_tot_val.setText(""+nozzle.getTot_value());
 
         viewHolder.remove=rootview.findViewById(R.id.remove) ;
-        viewHolder.remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               long c=new DataBaseHelper(activity).deleteNozzleById(nozzle);
-               if (c>0) {
-                   nozzles.remove(position);
-                   notifyDataSetChanged();
-               }else{
-                   Toast.makeText(activity, "Not Deleting..", Toast.LENGTH_SHORT).show();
-               }
-            }
+        viewHolder.remove.setOnClickListener(view -> {
+           long c=new DataBaseHelper(activity).deleteNozzleById(nozzle);
+           if (c>0) {
+               nozzles.remove(position);
+               notifyDataSetChanged();
+           }else{
+               Toast.makeText(activity, "Not Deleting..", Toast.LENGTH_SHORT).show();
+           }
         });
         return rootview;
     }

@@ -172,20 +172,16 @@ public class CameraActivity extends AppCompatActivity {
 							}
 						});
 				alert.setNegativeButton("Continue Without GPS",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-												int whichButton) {
-								Toast.makeText(CameraActivity.this,
-										"Working in offline mode",
-										Toast.LENGTH_LONG).show();
+						(dialog, whichButton) -> {
+							Toast.makeText(CameraActivity.this,
+									"Working in offline mode",
+									Toast.LENGTH_LONG).show();
 
-								GlobalVariable.isOfflineGPS = true;
-								LastLocation = null;
-								Button takePhoto = (Button) findViewById(R.id.btnCapture);
-								takePhoto.setText("Take Photo");
-								takePhoto.setEnabled(true);
-							}
+							GlobalVariable.isOfflineGPS = true;
+							LastLocation = null;
+							Button takePhoto = (Button) findViewById(R.id.btnCapture);
+							takePhoto.setText("Take Photo");
+							takePhoto.setEnabled(true);
 						});
 				alert.show();
 			}
@@ -201,6 +197,7 @@ public class CameraActivity extends AppCompatActivity {
 		}
 
 		mHandler = new Handler() {
+			@SuppressLint("HandlerLeak")
 			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
@@ -329,39 +326,26 @@ public class CameraActivity extends AppCompatActivity {
 
 		}
 	};
-	PictureCallback mPicture = new PictureCallback() {
-		@Override
-		public void onPictureTaken(byte[] data, Camera camera) {
-			try {
-				Log.d(TAG, "Start");
-				Bitmap bmp = BitmapFactory
-						.decodeByteArray(data, 0, data.length);
+	PictureCallback mPicture = (data, camera) -> {
+		try {
+			Log.d(TAG, "Start");
+			Bitmap bmp = BitmapFactory
+					.decodeByteArray(data, 0, data.length);
 
-				Matrix mat = new Matrix();
-				mat.postRotate(90);
-				Bitmap bMapRotate = Bitmap.createBitmap(bmp, 0, 0,
-						bmp.getWidth(), bmp.getHeight(), mat, true);
-				setCameraImage(Utiilties
-						.GenerateThumbnail(bMapRotate, 500, 700));
+			Matrix mat = new Matrix();
+			mat.postRotate(90);
+			Bitmap bMapRotate = Bitmap.createBitmap(bmp, 0, 0,
+					bmp.getWidth(), bmp.getHeight(), mat, true);
+			setCameraImage(Utiilties
+					.GenerateThumbnail(bMapRotate, 500, 700));
 
-			} catch (Exception ex) {
-				Log.d(TAG, ex.getMessage());
-			}
+		} catch (Exception ex) {
+			Log.d(TAG, ex.getMessage());
 		}
 	};
 
-	ShutterCallback shutterCallback = new ShutterCallback() {
-		@Override
-		public void onShutter() {
-			Log.d(TAG, "onShutter'd");
-		}
-	};
-	PictureCallback rawCallback = new PictureCallback() {
-		@Override
-		public void onPictureTaken(byte[] data, Camera camera) {
-			Log.d(TAG, "onPictureTaken - raw");
-		}
-	};
+	ShutterCallback shutterCallback = () -> Log.d(TAG, "onShutter'd");
+	PictureCallback rawCallback = (data, camera) -> Log.d(TAG, "onPictureTaken - raw");
 
 	public void onCaptureClick(View view) {
 		// System.gc();
@@ -457,15 +441,14 @@ public class CameraActivity extends AppCompatActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode,
 										   @NonNull String[] permissions, @NonNull int[] grantResults) {
-
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		switch (requestCode) {
 			case PERMISSIONS_MULTIPLE_REQUEST:
 				if (grantResults.length > 0) {
 					boolean mPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 					boolean mPermission1 = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 					//boolean mPermission2 = grantResults[2] == PackageManager.PERMISSION_GRANTED;
-					if(mPermission && mPermission1)
-					{
+					if (mPermission && mPermission1) {
 						// write your logic here
 						initializeCamera();
 						super.onResume();

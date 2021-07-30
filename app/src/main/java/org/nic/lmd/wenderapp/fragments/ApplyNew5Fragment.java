@@ -87,7 +87,8 @@ public class ApplyNew5Fragment extends Fragment {
         sp_valid = rootView.findViewById(R.id.sp_valid);
         sp_class = rootView.findViewById(R.id.sp_class);
         text_nozz_count = rootView.findViewById(R.id.text_nozz_count);
-        text_nozz_count.setOnClickListener(new View.OnClickListener() {
+        text_nozz_count.setVisibility(View.GONE);
+        /*text_nozz_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!edit_quantity.getText().toString().trim().equals("")) {
@@ -103,7 +104,7 @@ public class ApplyNew5Fragment extends Fragment {
                     }
                 }
             }
-        });
+        });*/
         initialiseSpinnerPro();
         categorySpinnerBinding();
         capacitySpinnerBinding();
@@ -129,7 +130,7 @@ public class ApplyNew5Fragment extends Fragment {
         edit_mod_no = rootview.findViewById(R.id.edit_mod_no);
         edit_ser_no = rootview.findViewById(R.id.edit_ser_no);
         edit_eval = rootview.findViewById(R.id.edit_eval);
-        edit_quantity.addTextChangedListener(new TextWatcher() {
+      /*  edit_quantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -150,7 +151,7 @@ public class ApplyNew5Fragment extends Fragment {
                     }
                 }
             }
-        });
+        });*/
 
         scroll_od_f5 = rootview.findViewById(R.id.scroll_od_f5);
         button_add_ins = rootview.findViewById(R.id.button_add_ins);
@@ -225,11 +226,11 @@ public class ApplyNew5Fragment extends Fragment {
             edit_quantity.setError("Enter Quantity");
             view_name = edit_quantity;
         }
-        else if (((cat_id.equals("16") && cap_id.equals("219")) || (cat_id.equals("19") && cap_id.equals("225")) || (cat_id.equals("22") && cap_id.equals("230")))&&(Integer.parseInt(edit_quantity.getText().toString().trim())!=nozzles.size())) {
+        /*else if (((cat_id.equals("16") && cap_id.equals("219")) || (cat_id.equals("19") && cap_id.equals("225")) || (cat_id.equals("22") && cap_id.equals("230")))&&(Integer.parseInt(edit_quantity.getText().toString().trim())!=nozzles.size())) {
             edit_quantity.setError("Quantity and number of Nozzle Added should be equal");
             message="Quantity and number of Nozzle Added should be equal";
             view_name = edit_quantity;
-        }
+        }*/
         else if (class_id.equals("0")) {
             message = "Please Select Class";
             view_name = sp_class;
@@ -263,8 +264,8 @@ public class ApplyNew5Fragment extends Fragment {
                 }
             }
         });
-        text_nozz_count.setText("" + nozzles.size());
-        Utiilties.didTapButton(text_nozz_count, getActivity());
+        //text_nozz_count.setText("" + nozzles.size());
+        //Utiilties.didTapButton(text_nozz_count, getActivity());
        /* ArrayList<Class_ins> classInsArrayList = new DataBaseHelper(getActivity()).getInsClass(1);
         sp_class.setText("--Select Class--");
         StringBuilder sb=new StringBuilder();
@@ -487,7 +488,7 @@ public class ApplyNew5Fragment extends Fragment {
         });
     }
 
-    public void AlertDialogForNozzleEntry() {
+   /* public void AlertDialogForNozzleEntry() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.nozzle_entry_dialog);
         dialog.setTitle("Nozzle Entry");
@@ -545,16 +546,16 @@ public class ApplyNew5Fragment extends Fragment {
             }
         });
         dialog.show();
-    }
+    }*/
 
-    private void populateProductRecycler(RecyclerView list_nozzle) {
+    /*private void populateProductRecycler(RecyclerView list_nozzle) {
         list_nozzle.invalidate();
         NozzleRecyclerAdapter nozzleRecyclerAdapter = new NozzleRecyclerAdapter(getActivity());
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getActivity());
         list_nozzle.setLayoutManager(mLayoutManager2);
         list_nozzle.setItemAnimator(new DefaultItemAnimator());
         list_nozzle.setAdapter(nozzleRecyclerAdapter);
-    }
+    }*/
 
     private void dialogAlert(FragmentActivity activity, String titel, String message) {
         new AlertDialog.Builder(activity)
@@ -568,7 +569,7 @@ public class ApplyNew5Fragment extends Fragment {
                 });
     }
 
-    private class NozzleRecyclerAdapter extends RecyclerView.Adapter<NozzleRecyclerAdapter.MyViewHolder> {
+    /*private class NozzleRecyclerAdapter extends RecyclerView.Adapter<NozzleRecyclerAdapter.MyViewHolder> {
 
         Activity activity;
 
@@ -624,5 +625,5 @@ public class ApplyNew5Fragment extends Fragment {
         public int getItemViewType(int position) {
             return position;
         }
-    }
+    }*/
 }
