@@ -8,6 +8,7 @@ public class VehicleTankDetails {
     private String chechisNumber;
     private String ownerFirmName;
     private String country;
+    private int denomId;
 
     public String getRegNumber() {
         return regNumber;
@@ -55,5 +56,13 @@ public class VehicleTankDetails {
 
     public void setVid(int vid) {
         this.vid = vid;
+    }
+
+    public int getDenomId() {
+        return denomId;
+    }
+
+    public void setDenomId(int denomId) {
+        this.denomId = denomId;
     }
 }

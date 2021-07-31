@@ -41,8 +41,13 @@ public class WeightDenominationActivity extends AppCompatActivity implements Vie
         textView.setText("" + new DataBaseHelper(WeightDenominationActivity.this).getAddedWeightCount());
         Utiilties.didTapButton(textView, WeightDenominationActivity.this);
         listView =  findViewById(R.id.list_denomination);
-        listView.setAdapter(new WeightDenominationAdapter(WeightDenominationActivity.this, getIntent().getStringExtra("category_id"), getIntent().getStringExtra("year"), textView));
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listView.invalidate();
+        listView.setAdapter(new WeightDenominationAdapter(WeightDenominationActivity.this, getIntent().getStringExtra("category_id"), getIntent().getStringExtra("year"), textView));
     }
 
     @SuppressLint("SetTextI18n")

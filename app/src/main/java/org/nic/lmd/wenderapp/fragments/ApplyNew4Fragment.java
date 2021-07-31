@@ -1,5 +1,6 @@
 package org.nic.lmd.wenderapp.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -54,11 +55,10 @@ public class ApplyNew4Fragment extends Fragment {
     TextView text_get_all;
     EditText edit_set_no;
     String[] sel_type = {"-- SELECT TYPE --", "Individual", "Set"};
-    LinearLayout ll_min_max,ll_entry_tank;
+    LinearLayout ll_min_max;
     String min_val = "0", max_val = "0";
-    AppCompatEditText edit_tank_reg_no,edit_tank_eng_no,edit_tank_chechis,edit_tank_ow_name;
-    AppCompatSpinner sp_contries;
-    String country="";
+
+
 
     public ApplyNew4Fragment() {
         // Required empty public constructor
@@ -75,19 +75,13 @@ public class ApplyNew4Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        edit_tank_reg_no =  getActivity().findViewById(R.id.edit_tank_reg_no);
-        edit_tank_eng_no =  getActivity().findViewById(R.id.edit_tank_eng_no);
-        edit_tank_chechis =  getActivity().findViewById(R.id.edit_tank_chechis);
-        edit_tank_ow_name =  getActivity().findViewById(R.id.edit_tank_ow_name);
-        sp_contries =  getActivity().findViewById(R.id.sp_contries);
+
         edit_set_no =  getActivity().findViewById(R.id.edit_set_no);
         ll_single =  getActivity().findViewById(R.id.ll_single);
         frame_sel_type =  getActivity().findViewById(R.id.frame_sel_type);
         ll_single.setVisibility(View.GONE);
         ll_min_max =  getActivity().findViewById(R.id.ll_min_max);
-        ll_entry_tank =  getActivity().findViewById(R.id.ll_entry_tank);
         ll_min_max.setVisibility(View.GONE);
-        ll_entry_tank.setVisibility(View.GONE);
         text_get_all =  getActivity().findViewById(R.id.text_get_all);
         text_get_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,9 +158,6 @@ public class ApplyNew4Fragment extends Fragment {
                 }
             }
         });
-        add_tank_detils.setOnClickListener((View v)->{
-            addTankDetails();
-        });
         initialiseSpinnerPro();
         categorySpinnerBinding("0");
         selectionTypeBinding();
@@ -175,36 +166,6 @@ public class ApplyNew4Fragment extends Fragment {
         validityBinding();
         setTotalAdded();
 
-    }
-
-    private void addTankDetails() {
-        System.out.println("under addTankDetails");
-        if (Objects.requireNonNull(edit_tank_reg_no.getText()).toString().trim().equals("")){
-            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.reg_no), Toast.LENGTH_SHORT).show();
-        }else if (Objects.requireNonNull(edit_tank_eng_no.getText()).toString().trim().equals("")){
-            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.eng_no), Toast.LENGTH_SHORT).show();
-        }else if (Objects.requireNonNull(edit_tank_chechis.getText()).toString().trim().equals("")){
-            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.chechis_number), Toast.LENGTH_SHORT).show();
-        }else if (Objects.requireNonNull(edit_tank_ow_name.getText()).toString().trim().equals("")){
-            Toast.makeText(getActivity(), "Enter "+getResources().getString(R.string.firm_own_name), Toast.LENGTH_SHORT).show();
-        }else if (country.trim().equals("")){
-            Toast.makeText(getActivity(), "Select Country", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            VehicleTankDetails vehicleTankDetail=new VehicleTankDetails();
-            vehicleTankDetail.setRegNumber(edit_tank_reg_no.getText().toString().trim());
-            vehicleTankDetail.setChechisNumber(edit_tank_reg_no.getText().toString().trim());
-            vehicleTankDetail.setEngineNumber(edit_tank_reg_no.getText().toString().trim());
-            vehicleTankDetail.setOwnerFirmName(edit_tank_reg_no.getText().toString().trim());
-            vehicleTankDetail.setCountry(country);
-            long c=new DataBaseHelper(getActivity()).addTank(vehicleTankDetail);
-            if (c>0){
-                setTotalAdded();
-                Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getActivity(), "Not Saved", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override
@@ -343,7 +304,9 @@ public class ApplyNew4Fragment extends Fragment {
                         if (cat_id.equals("19")) {
                             dialogForClearWeightAndInstrument();
                         } else {
-                            ll_entry_tank.setVisibility(View.GONE);
+                            if (new DataBaseHelper(getActivity()).getTankcount()>0){
+                                dialogForClearTanks();
+                            }
                         }
                     }else{
                         sp_sel_type.setEnabled(true);
@@ -365,6 +328,25 @@ public class ApplyNew4Fragment extends Fragment {
     }
 
     private void dialogForClearTanks() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        builder1.setTitle("Warning");
+        builder1.setMessage("This selection will delete all VEHICLE TANK Entered.Are you ready to delete ?");
+        builder1.setCancelable(true);
+        builder1.setPositiveButton(
+                "Yes",
+                (dialog, id) -> {
+                    new DataBaseHelper(getActivity()).deleteAllTanks();
+                    dialog.dismiss();
+                });
+        builder1.setNegativeButton(
+                "No",
+                (dialog, id) -> {
+                    sp_cat_f4.setSelection(0);
+                    dialog.cancel();
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
     private void selectionTypeBinding() {
@@ -390,32 +372,9 @@ public class ApplyNew4Fragment extends Fragment {
         });
     }
 
-    private void CountyBinding(){
-        sp_contries.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, new String[]{"India","Nepal"}));
-        sp_contries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i <= 0) {
-                  country="";
-                }  else {
-                    country=adapterView.getItemAtPosition(i).toString();
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-    }
 
-    private void initialiseTankDetails(){
-         CountyBinding();
-        edit_tank_chechis.setText("");
-        edit_tank_eng_no.setText("");
-        edit_tank_ow_name.setText("");
-        edit_tank_reg_no.setText("");
-        sp_contries.setSelection(0);
-    }
+
 
     private void validityBinding() {
         //final ArrayList<DenomintionEntity> denomintionEntities = new DataBaseHelper(getActivity()).getWeightDenomination(pro_id);
@@ -442,23 +401,30 @@ public class ApplyNew4Fragment extends Fragment {
 
             }
         });
-
     }
+
     private void dialogForClearWeightAndInstrument() {
-        new AlertDialog.Builder(getActivity())
-                .setTitle("Warning")
-                .setMessage("This selection will delete all Weight and Instrument Selected.Are you ready to delete ?")
-                .setPositiveButton(android.R.string.ok, (dialog, which) ->{
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        builder1.setTitle("Warning");
+        builder1.setMessage("This selection will delete all Weight and Instrument Selected.Are you ready to delete ?");
+        builder1.setCancelable(true);
+        builder1.setPositiveButton(
+                "Yes",
+                (dialog, id) -> {
                     new DataBaseHelper(getActivity()).deleteAllInstruments();
                     new DataBaseHelper(getActivity()).updateweightDenomination();
                     new DataBaseHelper(getActivity()).deleteAllNozzle();
-                    ll_entry_tank.setVisibility(View.VISIBLE);
-                    initialiseTankDetails();
                     dialog.dismiss();
-                }
+                });
+        builder1.setNegativeButton(
+                "No",
+                (dialog, id) -> {
+                    sp_cat_f4.setSelection(0);
+                    dialog.cancel();
+                });
 
-
-                );
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
     @Override

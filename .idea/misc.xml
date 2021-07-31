@@ -17,7 +17,9 @@
         <entry key="..\:/cks apps/WenderApp/app/src/main/res/layout/fragment_bus_reg_details.xml" value="0.22" />
         <entry key="..\:/cks apps/WenderApp/app/src/main/res/layout/fragment_name_and_o_d.xml" value="0.22" />
         <entry key="..\:/cks apps/WenderApp/app/src/main/res/layout/fragment_upload_document.xml" value="0.15" />
-        <entry key="..\:/cks apps/WenderApp/app/src/main/res/layout/tank_details_item.xml" value="0.25" />
+        <entry key="..\:/cks apps/WenderApp/app/src/main/res/layout/nozzle_entry_dialog.xml" value="0.16203703703703703" />
+        <entry key="..\:/cks apps/WenderApp/app/src/main/res/layout/tank_details_item.xml" value="0.22" />
+        <entry key="..\:/cks apps/WenderApp/app/src/main/res/layout/tank_entry_dialog.xml" value="0.2" />
       </map>
     </option>
   </component>

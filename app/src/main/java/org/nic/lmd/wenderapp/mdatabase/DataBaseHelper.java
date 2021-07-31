@@ -214,6 +214,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
       /*  String CREATE_NEFT_TABLE = "CREATE TABLE NEFT (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,WALLET_ID TEXT,AMOUNT TEXT,UTR_NO TEXT,TOPUP_TIME TEXT,u_id TEXT);";
         String CREATE_STATEMENT_TABLE = "CREATE TABLE Statement (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT   ,CON_ID TEXT,RCPT_NO TEXT,PAY_AMT TEXT,WALLET_BALANCE TEXT,WALLET_ID TEXT,RRFContactNo TEXT,ConsumerContactNo TEXT,transStatus TEXT,MESSAGE_STRING TEXT,Authenticated TEXT,payDate\tTEXT,BILL_NO TEXT,payMode TEXT,CNAME TEXT,IS_PRINTED TEXT,TRANS_ID TEXT,USER_ID TEXT);";
         String CREATE_BookNo_TABLE = "CREATE TABLE BookNo (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,BookNo TEXT,MessageString TEXT,USER_ID TEXT);";
@@ -227,13 +228,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        System.out.println("version-- "+"older--"+oldVersion+"newer"+newVersion);
+        System.out.println("version-- " + "older= " + oldVersion + "newer= " + newVersion);
         if (oldVersion >= newVersion) return;
-        ClearAllTable(db);
-        onCreate(db);
+        //ClearAllTable(db);
+        //onCreate(db);
         if (oldVersion == 1) {
             Log.d("New Version", "Data can be upgraded");
-            String CREATE_TANK_TABLE = "CREATE TABLE VEHICLE_TANK (v_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,reg_no TEXT,eng_no TEXT,chechis_no TEXT,firm_or_owner_name TEXT,country TEXT);";
+        }
+        if (newVersion == 1) {
+            String CREATE_TANK_TABLE = "CREATE TABLE VEHICLE_TANK (v_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,reg_no TEXT,eng_no TEXT,chechis_no TEXT,firm_or_owner_name TEXT,country TEXT,denom_id NUMERIC);";
             db.execSQL(CREATE_TANK_TABLE);
         }
         Log.d("Sample Data", "onUpgrade	: " + newVersion);
@@ -241,14 +244,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public void ClearAllTable(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS DISTRICT");
-        db.execSQL("DROP TABLE IF EXISTS NATURE_OF_BUSINESS");
-        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
-        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
-        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
-        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
-        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
-        db.execSQL("DROP TABLE IF EXISTS ActivityCode");
+        /*db.execSQL("DROP TABLE IF EXISTS DISTRICT");
+        db.execSQL("DROP TABLE IF EXISTS NATURE_OF_BUSINESS");*/
     }
 
     public long saveDistrict(ArrayList<District> activityGroups) {
@@ -739,7 +736,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return c;
     }
 
-    public long updateDenomination(String vanderId, String vcId, String den_id, String flag, String set_quantity, int no_of_set, String qty_total, String val_year, String pro_id,  boolean is_set_last_mem) {
+    public long updateDenomination(String vanderId, String vcId, String den_id, String flag, String set_quantity, int no_of_set, String qty_total, String val_year, String pro_id, boolean is_set_last_mem) {
         long c = -1;
         int qt_now = 0;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1403,8 +1400,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 c = db.delete("INSTRUMENT_ADD", "_id=?", new String[]{id.trim()});
                 if (getNozzleCountBySL_ID(id.trim()) > 0) {
                     c1 = db.delete("NOZZLE", "sl_id=?", new String[]{id.trim()});
-                    String msg=(c1>0)?"Nozzle deleted":"Nozzle not deleted";
-                    Log.e("database-1359","***** "+msg+" *******");
+                    String msg = (c1 > 0) ? "Nozzle deleted" : "Nozzle not deleted";
+                    Log.e("database-1359", "***** " + msg + " *******");
                 }
             }
         } catch (Exception e) {
@@ -2056,7 +2053,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
             for (int i = 0; i < jsonArray2.length(); i++) {
                 JSONObject jsonObject_deno = jsonArray2.getJSONObject(i);
-                c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y", jsonObject_deno.getString("quantity"), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"),  false);
+                c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y", jsonObject_deno.getString("quantity"), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
             }
             for (int j = 0; j < jsonArray3.length(); j++) {
                 JSONObject jsonObject_ins = jsonArray3.getJSONObject(j);
@@ -2208,7 +2205,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 values.put("sl_id", nozzle.getSl_id());
                 //c = db.update("NOZZLE", values, "sl_id=? AND product_id=?", new String[]{nozzle.getSl_id(), nozzle.getProduct_id().trim()});
                 //if (c <= 0) {
-                    c = db.insert("NOZZLE", null, values);
+                c = db.insert("NOZZLE", null, values);
                /* } else {
                     Log.e("error", "....Nozzle not inserted....");
                 }*/
@@ -2303,7 +2300,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 cursor = db.rawQuery("select * from NOZZLE where sl_id='" + sl_id + "'", null);
             }
             count = cursor.getCount();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.e("error", e.getMessage());
             return 0;
@@ -2316,63 +2313,70 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public long addTank(VehicleTankDetails vehicleTankDetail) {
-        final SQLiteDatabase db=this.getWritableDatabase();;
+        final SQLiteDatabase db = this.getWritableDatabase();
+        ;
         long c = 0;
-        try{
-                //vehicleTankDetails.stream().forEach((vehicleTankDetail)->{
-                ContentValues contentValues=new ContentValues();
-                contentValues.put("reg_no",vehicleTankDetail.getRegNumber());
-                contentValues.put("eng_no",vehicleTankDetail.getEngineNumber());
-                contentValues.put("chechis_no",vehicleTankDetail.getChechisNumber());
-                contentValues.put("firm_or_owner_name",vehicleTankDetail.getOwnerFirmName());
-                contentValues.put("country",vehicleTankDetail.getCountry());
-                c=db.insert("VEHICLE_TANK",null,contentValues);
+        try {
+            //vehicleTankDetails.stream().forEach((vehicleTankDetail)->{
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("reg_no", vehicleTankDetail.getRegNumber());
+            contentValues.put("eng_no", vehicleTankDetail.getEngineNumber());
+            contentValues.put("chechis_no", vehicleTankDetail.getChechisNumber());
+            contentValues.put("firm_or_owner_name", vehicleTankDetail.getOwnerFirmName());
+            contentValues.put("country", vehicleTankDetail.getCountry());
+            contentValues.put("denom_id", vehicleTankDetail.getDenomId());
+            c = db.insert("VEHICLE_TANK", null, contentValues);
             //});
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            c=-1;
-        }finally {
+            c = -1;
+        } finally {
             db.close();
         }
         return c;
     }
 
-    public long getTankcount(){
-        SQLiteDatabase db=null;
-        Cursor cursor=null;
-        long totalCount=0;
-        try{
-            db=this.getReadableDatabase();
-            cursor=db.rawQuery("select * from VEHICLE_TANK",null);
+    public long getTankcount() {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        long totalCount = 0;
+        try {
+            db = this.getReadableDatabase();
+            cursor = db.rawQuery("select v_id from VEHICLE_TANK", null);
             cursor.getCount();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             cursor.close();
             db.close();
         }
         return totalCount;
     }
 
-    public ArrayList<VehicleTankDetails> getTotalTank(){
-        ArrayList<VehicleTankDetails> vehicleTankDetails=new ArrayList<>();
-        SQLiteDatabase db=null;
-        Cursor cursor=null;
-        long totalCount=0;
-        try{
-            db=this.getReadableDatabase();
-            cursor=db.rawQuery("select * from VEHICLE_TANK",null);
-            VehicleTankDetails vehicleTankDetail=new VehicleTankDetails();
-            vehicleTankDetail.setRegNumber(cursor.isNull(cursor.getColumnIndex("reg_no"))?"":cursor.getString(cursor.getColumnIndex("reg_no")));
-            vehicleTankDetail.setEngineNumber(cursor.isNull(cursor.getColumnIndex("eng_no"))?"":cursor.getString(cursor.getColumnIndex("eng_no")));
-            vehicleTankDetail.setChechisNumber(cursor.isNull(cursor.getColumnIndex("chechis_no"))?"":cursor.getString(cursor.getColumnIndex("chechis_no")));
-            vehicleTankDetail.setOwnerFirmName(cursor.isNull(cursor.getColumnIndex("firm_or_owner_name"))?"":cursor.getString(cursor.getColumnIndex("firm_or_owner_name")));
-            vehicleTankDetail.setCountry(cursor.isNull(cursor.getColumnIndex("country"))?"":cursor.getString(cursor.getColumnIndex("country")));
-            vehicleTankDetail.setVid(cursor.isNull(cursor.getColumnIndex("v_id"))?0:cursor.getInt(cursor.getColumnIndex("v_id")));
-            vehicleTankDetails.add(vehicleTankDetail);
-        }catch (Exception e){
+    public ArrayList<VehicleTankDetails> getTotalTank(String denom_id) {
+        ArrayList<VehicleTankDetails> vehicleTankDetails = new ArrayList<>();
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        long totalCount = 0;
+        try {
+            db = this.getReadableDatabase();
+            String quary="select * from VEHICLE_TANK where denom_id='" + denom_id + "'";
+            cursor = db.rawQuery(quary, null);
+            System.out.println("size== "+cursor.getCount());
+            while (cursor.moveToNext()) {
+                VehicleTankDetails vehicleTankDetail = new VehicleTankDetails();
+                vehicleTankDetail.setRegNumber((cursor.isNull(cursor.getColumnIndex("reg_no"))) ? "" : cursor.getString(cursor.getColumnIndex("reg_no")));
+                vehicleTankDetail.setEngineNumber((cursor.isNull(cursor.getColumnIndex("eng_no"))) ? "" : cursor.getString(cursor.getColumnIndex("eng_no")));
+                vehicleTankDetail.setChechisNumber((cursor.isNull(cursor.getColumnIndex("chechis_no"))) ? "" : cursor.getString(cursor.getColumnIndex("chechis_no")));
+                vehicleTankDetail.setOwnerFirmName(cursor.isNull(cursor.getColumnIndex("firm_or_owner_name")) ? "" : cursor.getString(cursor.getColumnIndex("firm_or_owner_name")));
+                vehicleTankDetail.setCountry((cursor.isNull(cursor.getColumnIndex("country"))) ? "" : cursor.getString(cursor.getColumnIndex("country")));
+                vehicleTankDetail.setVid((cursor.isNull(cursor.getColumnIndex("v_id"))) ? 0 : cursor.getInt(cursor.getColumnIndex("v_id")));
+                vehicleTankDetail.setDenomId((cursor.isNull(cursor.getColumnIndex("denom_id"))) ? 0 : cursor.getInt(cursor.getColumnIndex("denom_id")));
+                vehicleTankDetails.add(vehicleTankDetail);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             cursor.close();
             db.close();
         }
@@ -2391,4 +2395,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return c;
     }
 
+    public void deleteAllTanks() {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("delete from VEHICLE_TANK");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("error", e.getMessage());
+        }
+    }
 }
