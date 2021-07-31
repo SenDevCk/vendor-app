@@ -42,8 +42,9 @@ public class ApplyNewActivity extends AppCompatActivity {
             //if (getIntent().getStringExtra("for").equals("edit")) {
                 new DataBaseHelper(ApplyNewActivity.this).deleteAllInstruments();
                 new DataBaseHelper(ApplyNewActivity.this).deleteAllNozzle();
-                new DataBaseHelper(ApplyNewActivity.this).deleteAllPatner();
                 new DataBaseHelper(ApplyNewActivity.this).updateweightDenomination();
+                new DataBaseHelper(ApplyNewActivity.this).deleteAllPatner();
+                new DataBaseHelper(ApplyNewActivity.this).deleteAllTanks();
            // }
             ApplyNew1Fragment applyNew1Fragment = new ApplyNew1Fragment();
             androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();

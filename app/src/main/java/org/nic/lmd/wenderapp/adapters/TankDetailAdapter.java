@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import org.nic.lmd.wenderapp.R;
-import org.nic.lmd.wenderapp.entities.DenomintionEntity;
 import org.nic.lmd.wenderapp.entities.VehicleTankDetails;
 import org.nic.lmd.wenderapp.mdatabase.DataBaseHelper;
 

@@ -24,6 +24,7 @@ import org.nic.lmd.wenderapp.entities.InstrumentEntity;
 import org.nic.lmd.wenderapp.entities.Nozzle;
 import org.nic.lmd.wenderapp.entities.PatnerEntity;
 import org.nic.lmd.wenderapp.entities.UserData;
+import org.nic.lmd.wenderapp.entities.VehicleTankDetails;
 import org.nic.lmd.wenderapp.fragments.ApplyNew1Fragment;
 import org.nic.lmd.wenderapp.fragments.ApplyNew2Fragment;
 import org.nic.lmd.wenderapp.fragments.ApplyNew3Fragment;
@@ -112,10 +113,10 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                 jsonObject.accumulate("dateOfRegistration", cursor.getString(cursor.getColumnIndex("date_of_reg")));
                 jsonObject.accumulate("commencementDate", cursor.getString(cursor.getColumnIndex("date_of_comm")));
                 jsonObject.accumulate("placeOfverification", cursor.getString(cursor.getColumnIndex("place_of_var")));
-                jsonObject.accumulate("latitude", cursor.isNull(cursor.getColumnIndex("latitude"))?JSONObject.NULL:cursor.getString(cursor.getColumnIndex("latitude")));
-                jsonObject.accumulate("longitude", cursor.isNull(cursor.getColumnIndex("longitude"))?JSONObject.NULL:cursor.getString(cursor.getColumnIndex("longitude")));
+                jsonObject.accumulate("latitude", cursor.isNull(cursor.getColumnIndex("latitude")) ? JSONObject.NULL : cursor.getString(cursor.getColumnIndex("latitude")));
+                jsonObject.accumulate("longitude", cursor.isNull(cursor.getColumnIndex("longitude")) ? JSONObject.NULL : cursor.getString(cursor.getColumnIndex("longitude")));
 
-                jsonObject.accumulate("shopImage", cursor.isNull(cursor.getColumnIndex("shop_img"))?JSONObject.NULL:Utiilties.BitArrayToString(cursor.getBlob(cursor.getColumnIndex("shop_img"))));
+                jsonObject.accumulate("shopImage", cursor.isNull(cursor.getColumnIndex("shop_img")) ? JSONObject.NULL : Utiilties.BitArrayToString(cursor.getBlob(cursor.getColumnIndex("shop_img"))));
             }
             jsonObject.accumulate("userId", userData.getUserid().trim());
             jsonObject.accumulate("xdelCountry", 1);
@@ -128,7 +129,7 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
             jsonObject.accumulate("vcs", jsonArray4);
             jsonObject.accumulate("vofficials", jsonArray3);
             //if (!intent.hasExtra("for"))
-                json_res = WebHandler.callByPost(jsonObject.toString(), Urls_this_pro.LOAD_UPLOAD);
+            json_res = WebHandler.callByPost(jsonObject.toString(), Urls_this_pro.LOAD_UPLOAD);
         } catch (Exception e) {
             e.printStackTrace();
             return json_res;
@@ -138,13 +139,13 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
 
     private JSONArray getArrayOFIns() {
         ArrayList<InstrumentEntity> instrumentEntities = new DataBaseHelper(activity).getInstrumentAdded();
-        JSONArray jsonArray_ins  = new JSONArray();
+        JSONArray jsonArray_ins = new JSONArray();
         try {
-            for (int pos=0;pos<instrumentEntities.size();pos++) {
-                InstrumentEntity instrumentEntity=instrumentEntities.get(pos);
+            for (int pos = 0; pos < instrumentEntities.size(); pos++) {
+                InstrumentEntity instrumentEntity = instrumentEntities.get(pos);
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("vendorId", (instrumentEntity.getVendorId()==null)?JSONObject.NULL :instrumentEntity.getVendorId());
-                jsonObject.accumulate("vcId", ((instrumentEntity.getVcId()==null)? JSONObject.NULL :Integer.parseInt(instrumentEntity.getVcId())));
+                jsonObject.accumulate("vendorId", (instrumentEntity.getVendorId() == null) ? JSONObject.NULL : instrumentEntity.getVendorId());
+                jsonObject.accumulate("vcId", ((instrumentEntity.getVcId() == null) ? JSONObject.NULL : Integer.parseInt(instrumentEntity.getVcId())));
                 jsonObject.accumulate("capacityId", Integer.parseInt(instrumentEntity.getCap_id()));
                 jsonObject.accumulate("proposalId", Integer.parseInt(instrumentEntity.getPro_id()));
                 jsonObject.accumulate("categoryId", Integer.parseInt(instrumentEntity.getCat_id()));
@@ -170,7 +171,7 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                 jsonObject.accumulate("status", JSONObject.NULL);
                 jsonObject.accumulate("slNo", JSONObject.NULL);
                 jsonObject.accumulate("evalue", "" + instrumentEntity.getE_val());
-                jsonObject.accumulate("extensions", getArrayOFExtentions(instrumentEntity.getId(),pos));
+                jsonObject.accumulate("extensions", getArrayOFExtentions(instrumentEntity.getId(), pos));
                 jsonArray_ins.put(jsonObject);
             }
         } catch (Exception exp) {
@@ -178,20 +179,21 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
         }
         return jsonArray_ins;
     }
-    private JSONArray getArrayOFExtentions(String sl_id,int pos) {
+
+    private JSONArray getArrayOFExtentions(String sl_id, int pos) {
         ArrayList<Nozzle> nozzles = new DataBaseHelper(activity).getAddedNozzle(sl_id);
         JSONArray jsonArray_nozz = new JSONArray();
         try {
-            for (int i=0;i<nozzles.size();i++) {
-                Nozzle nozzle=nozzles.get(i);
+            for (int i = 0; i < nozzles.size(); i++) {
+                Nozzle nozzle = nozzles.get(i);
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("vendorId", (nozzle.getVendorId()==null)?JSONObject.NULL:nozzle.getVendorId().trim());
-                jsonObject.accumulate("vcId",(nozzle.getVcId()==null)?JSONObject.NULL:Integer.parseInt(nozzle.getVcId().trim()));
+                jsonObject.accumulate("vendorId", (nozzle.getVendorId() == null) ? JSONObject.NULL : nozzle.getVendorId().trim());
+                jsonObject.accumulate("vcId", (nozzle.getVcId() == null) ? JSONObject.NULL : Integer.parseInt(nozzle.getVcId().trim()));
                 jsonObject.accumulate("insSlno", pos);
-                jsonObject.accumulate("extSlno", i+1);
+                jsonObject.accumulate("extSlno", i + 1);
                 jsonObject.accumulate("nozalNo", nozzle.getNozzle_num());
                 jsonObject.accumulate("kfactor", Double.parseDouble(nozzle.getK_factor()));
-                jsonObject.accumulate("totalizerValue",Double.parseDouble(nozzle.getTot_value()));
+                jsonObject.accumulate("totalizerValue", Double.parseDouble(nozzle.getTot_value()));
                 jsonObject.accumulate("product", Integer.parseInt(nozzle.getProduct_id().trim()));
                 jsonObject.accumulate("calNo", Integer.parseInt(nozzle.getCal_num()));
                 jsonArray_nozz.put(jsonObject);
@@ -202,27 +204,20 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
         }
         return jsonArray_nozz;
     }
+
     private JSONArray getArrayOFWeight() {
         ArrayList<DenomintionEntity> denomintionEntities = new DataBaseHelper(activity).getWeightDenomination("0", "0");
         JSONArray jsonArray_weight = new JSONArray();
         try {
             for (DenomintionEntity denomintionEntity : denomintionEntities) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("vendorId", (denomintionEntity.getVendorId()==null)?JSONObject.NULL:denomintionEntity.getVendorId().trim());
-                jsonObject.accumulate("vcId",(denomintionEntity.getVcId()==null)?JSONObject.NULL:Integer.parseInt(denomintionEntity.getVcId().trim()));
-                jsonObject.accumulate("denomination", Integer.parseInt(denomintionEntity.getValue()));
-                jsonObject.accumulate("proposalId", Integer.parseInt(denomintionEntity.getPro_id().trim()));
-                jsonObject.accumulate("categoryId", Integer.parseInt(denomintionEntity.getCategoryId().trim()));
-                jsonObject.accumulate("quantity", Integer.parseInt(denomintionEntity.getQuantity().trim()));
-                jsonObject.accumulate("validYear", Integer.parseInt(denomintionEntity.getVal_year().trim()));
-                jsonObject.accumulate("vfRate", JSONObject.NULL);
-                jsonObject.accumulate("vfAmount", JSONObject.NULL);
-                jsonObject.accumulate("afAmount", JSONObject.NULL);
-                jsonObject.accumulate("urAmount", JSONObject.NULL);
-                jsonObject.accumulate("nextverificationQtr", JSONObject.NULL);
-                jsonObject.accumulate("duesQtr", JSONObject.NULL);
-                jsonObject.accumulate("status", JSONObject.NULL);
-                jsonArray_weight.put(jsonObject);
+                if (denomintionEntity.getCategoryId().equals("19")) {
+                    ArrayList<VehicleTankDetails> vehicleTankDetails = new DataBaseHelper(activity).getTotalTank(denomintionEntity.getValue());
+                    for (int i = 0; i < vehicleTankDetails.size(); i++) {
+                        jsonArray_weight.put(returnWeightObject(denomintionEntity, vehicleTankDetails.get(i)));
+                    }
+                } else {
+                    jsonArray_weight.put(returnWeightObject(denomintionEntity, new VehicleTankDetails()));
+                }
             }
         } catch (Exception exp) {
             exp.printStackTrace();
@@ -231,14 +226,43 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
         return jsonArray_weight;
     }
 
+    private JSONObject returnWeightObject(DenomintionEntity denomintionEntity, VehicleTankDetails vehicleTankDetail) {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject();
+            jsonObject.accumulate("vendorId", (denomintionEntity.getVendorId() == null) ? JSONObject.NULL : denomintionEntity.getVendorId().trim());
+            jsonObject.accumulate("vcId", (denomintionEntity.getVcId() == null) ? JSONObject.NULL : Integer.parseInt(denomintionEntity.getVcId().trim()));
+            jsonObject.accumulate("denomination", Integer.parseInt(denomintionEntity.getValue()));
+            jsonObject.accumulate("proposalId", Integer.parseInt(denomintionEntity.getPro_id().trim()));
+            jsonObject.accumulate("categoryId", Integer.parseInt(denomintionEntity.getCategoryId().trim()));
+            jsonObject.accumulate("quantity", Integer.parseInt(denomintionEntity.getQuantity().trim()));
+            jsonObject.accumulate("validYear", Integer.parseInt(denomintionEntity.getVal_year().trim()));
+            jsonObject.accumulate("vfRate", JSONObject.NULL);
+            jsonObject.accumulate("vfAmount", JSONObject.NULL);
+            jsonObject.accumulate("afAmount", JSONObject.NULL);
+            jsonObject.accumulate("urAmount", JSONObject.NULL);
+            jsonObject.accumulate("nextverificationQtr", JSONObject.NULL);
+            jsonObject.accumulate("duesQtr", JSONObject.NULL);
+            jsonObject.accumulate("status", JSONObject.NULL);
+            jsonObject.accumulate("vechile_registraction_no", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getRegNumber());
+            jsonObject.accumulate("vechile_engine_no", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getEngineNumber());
+            jsonObject.accumulate("vechile_chesis_no", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getChechisNumber());
+            jsonObject.accumulate("vechile_owner_name", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getOwnerFirmName());
+            jsonObject.accumulate("country_name", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getCountry());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
     private JSONArray getArrayOFPatner() {
         ArrayList<PatnerEntity> patnerEntities = new DataBaseHelper(activity).getAllPatners();
         JSONArray jsonArray_ins = new JSONArray();
         try {
             for (PatnerEntity patnerEntity : patnerEntities) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("partnerId", ((patnerEntity.getPartnerId()==null)?JSONObject.NULL:Integer.parseInt(patnerEntity.getPartnerId().trim())));
-                jsonObject.accumulate("vendorId", ((patnerEntity.getVendorId()==null)?JSONObject.NULL:patnerEntity.getVendorId().trim()));
+                jsonObject.accumulate("partnerId", ((patnerEntity.getPartnerId() == null) ? JSONObject.NULL : Integer.parseInt(patnerEntity.getPartnerId().trim())));
+                jsonObject.accumulate("vendorId", ((patnerEntity.getVendorId() == null) ? JSONObject.NULL : patnerEntity.getVendorId().trim()));
                 jsonObject.accumulate("partnerName", "" + patnerEntity.getName());
                 jsonObject.accumulate("fatherHusbandName", "" + patnerEntity.getFather_name());
                 jsonObject.accumulate("aadhaarNo", "" + patnerEntity.getAdhar_vid());
@@ -271,11 +295,11 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
         //ArrayList<PatnerEntity> patnerEntities=new DataBaseHelper(activity).getAllPatners();
         JSONArray jsonArray_ins = new JSONArray();
         try {
-            if(intent.hasExtra("for")){
-                JSONObject jsonObject=new JSONObject(intent.getStringExtra("json"));
-                jsonArray_ins=null;
-                jsonArray_ins=jsonObject.getJSONArray("vcs");
-            }else{
+            if (intent.hasExtra("for")) {
+                JSONObject jsonObject = new JSONObject(intent.getStringExtra("json"));
+                jsonArray_ins = null;
+                jsonArray_ins = jsonObject.getJSONArray("vcs");
+            } else {
                 JSONObject jsonObject = new JSONObject();
                 if (intent.hasExtra("vendorId"))
                     jsonObject.accumulate("vendorId", intent.getStringExtra("vendorId"));
@@ -299,7 +323,7 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String res) {
         super.onPostExecute(res);
-        Log.d("res",res);
+        Log.d("res", res);
         if (this.dialog1.isShowing()) dialog1.dismiss();
         if (res != null) {
             try {
@@ -311,8 +335,9 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                         new DataBaseHelper(activity).deleteAllPatner();
                         new DataBaseHelper(activity).updateweightDenomination();
                         new DataBaseHelper(activity).deleteAllNozzle();
+                        new DataBaseHelper(activity).deleteAllTanks();
                         //String ven_id = jsonObject.getString("status").trim().split(":")[1];
-                        String vid=Utiilties.extractInt(jsonObject.getString("status").split(":")[1]).trim();
+                        String vid = Utiilties.extractInt(jsonObject.getString("status").split(":")[1]).trim();
                         //String ven_id = jsonObject.getString("status").split(":")[1].substring(0,9);
                         long c = new DataBaseHelper(activity).saveVender(vid, CommonPref.getUserDetails(activity).getApplicantId().trim());
                         if (c <= 0) {
@@ -337,7 +362,8 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                             new DataBaseHelper(activity).deleteAllPatner();
                             new DataBaseHelper(activity).updateweightDenomination();
                             new DataBaseHelper(activity).deleteAllNozzle();
-                            String id_ven=jsonObject.getString("status").split(":")[1].substring(0,9);
+                            new DataBaseHelper(activity).deleteAllTanks();
+                            String id_ven = jsonObject.getString("status").split(":")[1].substring(0, 9);
                             long c = new DataBaseHelper(activity).saveVender(id_ven, CommonPref.getUserDetails(activity).getApplicantId().trim());
                             if (c <= 0) {
                                 Log.e("log : ", "Vender Id not saved in UploadTradorService(line 249)");

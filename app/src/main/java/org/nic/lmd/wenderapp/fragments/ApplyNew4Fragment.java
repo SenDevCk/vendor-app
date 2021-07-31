@@ -178,12 +178,12 @@ public class ApplyNew4Fragment extends Fragment {
         long cou_to = new DataBaseHelper(getActivity()).getAddedWeightCount();
         long cou_to2 = new DataBaseHelper(getActivity()).getTankcount();
         if (cou_to > 0) {
-            if (cou_to2<=0) {
-                text_get_all.setText("" + cou_to);
-            }else{
-                text_get_all.setText("" + cou_to2);
-            }
-        } else {
+            text_get_all.setText("" + cou_to);
+        }
+        else if (cou_to2 > 0){
+            text_get_all.setText("" + cou_to2);
+        }
+        else {
             text_get_all.setText("0");
         }
         Utiilties.didTapButton(text_get_all, getActivity());
@@ -336,6 +336,7 @@ public class ApplyNew4Fragment extends Fragment {
                 "Yes",
                 (dialog, id) -> {
                     new DataBaseHelper(getActivity()).deleteAllTanks();
+                    setTotalAdded();
                     dialog.dismiss();
                 });
         builder1.setNegativeButton(
@@ -413,7 +414,9 @@ public class ApplyNew4Fragment extends Fragment {
                 (dialog, id) -> {
                     new DataBaseHelper(getActivity()).deleteAllInstruments();
                     new DataBaseHelper(getActivity()).updateweightDenomination();
+                    //new DataBaseHelper(getActivity()).deleteAllPatner();
                     new DataBaseHelper(getActivity()).deleteAllNozzle();
+                    setTotalAdded();
                     dialog.dismiss();
                 });
         builder1.setNegativeButton(
