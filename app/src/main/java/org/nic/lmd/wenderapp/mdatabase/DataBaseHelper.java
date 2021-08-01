@@ -1,5 +1,6 @@
 package org.nic.lmd.wenderapp.mdatabase;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -1946,7 +1947,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long saveVenderJsonData(String res) {
+    public long saveVenderJsonData(String res, Activity activity) {
         long c = -1;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -2053,7 +2054,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
             for (int i = 0; i < jsonArray2.length(); i++) {
                 JSONObject jsonObject_deno = jsonArray2.getJSONObject(i);
-                c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y", jsonObject_deno.getString("quantity"), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
+                String cat_id=jsonObject_deno.getString("categoryId");
+                if (cat_id.equals("19")){
+                    DenomintionEntity denomintionEntity=new DataBaseHelper(activity).getWeightDenominationByID(jsonObject_deno.getString("denomination"));
+                    int qt=Integer.parseInt(denomintionEntity.getQuantity())+1;
+                    VehicleTankDetails vehicleTankDetails=new VehicleTankDetails();
+                    vehicleTankDetails.setDenomId(Integer.parseInt(denomintionEntity.getValue()));
+                    vehicleTankDetails.setRegNumber(jsonObject_deno.getString("vechile_registraction_no"));
+                    vehicleTankDetails.setEngineNumber(jsonObject_deno.getString("vechile_engine_no"));
+                    vehicleTankDetails.setChechisNumber(jsonObject_deno.getString("vechile_chesis_no"));
+                    vehicleTankDetails.setOwnerFirmName(jsonObject_deno.getString("vechile_owner_name"));
+                    vehicleTankDetails.setCountry(jsonObject_deno.getString("country_name"));
+                    addTank(vehicleTankDetails);
+                    c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y",String.valueOf(qt), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
+                }else {
+                    c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y", jsonObject_deno.getString("quantity"), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
+                }
             }
             for (int j = 0; j < jsonArray3.length(); j++) {
                 JSONObject jsonObject_ins = jsonArray3.getJSONObject(j);

@@ -231,7 +231,7 @@ public class WeightDenominationAdapter extends BaseAdapter {
     }
     private void populateProductRecycler(RecyclerView list_tanks,final DenomintionEntity denomintionEntity) {
                list_tanks.invalidate();
-               TankDetailAdapter nozzleRecyclerAdapter = new TankDetailAdapter(activity,denomintionEntity.getValue());
+               TankDetailAdapter nozzleRecyclerAdapter = new TankDetailAdapter(activity,denomintionEntity.getValue(),val_year);
                RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(activity);
                list_tanks.setLayoutManager(mLayoutManager2);
                list_tanks.setItemAnimator(new DefaultItemAnimator());

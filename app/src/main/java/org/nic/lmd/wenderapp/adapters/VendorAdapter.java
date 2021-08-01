@@ -139,81 +139,66 @@ public class VendorAdapter extends BaseAdapter {
             } else {
                 viewHolder.text_status.setText("status not avalable");
             }
-            viewHolder.button_upload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(activity, ApplyNewActivity.class);
+            viewHolder.button_upload.setOnClickListener(view -> {
+                Intent intent = new Intent(activity, ApplyNewActivity.class);
+                try {
+                    intent.putExtra("ven_id", jsonObject.getString("vendorId"));
+                    intent.putExtra("from", "main");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                activity.startActivity(intent);
+            });
+            viewHolder.button_view.setOnClickListener(view -> {
+                if (CommonPref.getCheckUpdateForApply(activity)) {
                     try {
-                        intent.putExtra("ven_id", jsonObject.getString("vendorId"));
-                        intent.putExtra("from", "main");
-                    } catch (JSONException e) {
+                        Intent intent = new Intent(activity, ApplicationBillingDetailsActivity.class);
+                        intent.putExtra("venderid", jsonObject.getString("vendorId"));
+                        intent.putExtra("status", jsonObject.getString("status"));
+                        activity.startActivity(intent);
+                    }catch (JSONException e){
                         e.printStackTrace();
                     }
-                    activity.startActivity(intent);
+                }else if (!Utiilties.isOnline(activity)){
+                    Toast.makeText(activity, "Internet Not Avalable !", Toast.LENGTH_SHORT).show();
                 }
-            });
-            viewHolder.button_view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (CommonPref.getCheckUpdateForApply(activity)) {
-                        try {
-                            Intent intent = new Intent(activity, ApplicationBillingDetailsActivity.class);
-                            intent.putExtra("venderid", jsonObject.getString("vendorId"));
-                            intent.putExtra("status", jsonObject.getString("status"));
-                            activity.startActivity(intent);
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }else if (!Utiilties.isOnline(activity)){
-                        Toast.makeText(activity, "Internet Not Avalable !", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        new FirmTypeLoader(activity).execute();
-                    }
+                else {
+                    new FirmTypeLoader(activity).execute();
                 }
             });
 
-            viewHolder.button_edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            viewHolder.button_edit.setOnClickListener(view -> {
+                try {
+                    callService(jsonObject.getString("vendorId"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            });
+
+
+            viewHolder.button_renew.setOnClickListener(v -> {
+                if (CommonPref.getCheckUpdateForApply(activity)) {
                     try {
-                        callService(jsonObject.getString("vendorId"));
-                    } catch (JSONException e) {
+                        Intent intent = new Intent(activity, RenawalActivity.class);
+                        intent.putExtra("venderid", jsonObject.getString("vendorId"));
+                        activity.startActivity(intent);
+                    }catch (JSONException e){
                         e.printStackTrace();
                     }
+                }else if (!Utiilties.isOnline(activity)){
+                    Toast.makeText(activity, "Internet Not Avalable !", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    new FirmTypeLoader(activity).execute();
                 }
             });
 
-
-            viewHolder.button_renew.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (CommonPref.getCheckUpdateForApply(activity)) {
-                        try {
-                            Intent intent = new Intent(activity, RenawalActivity.class);
-                            intent.putExtra("venderid", jsonObject.getString("vendorId"));
-                            activity.startActivity(intent);
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }else if (!Utiilties.isOnline(activity)){
-                        Toast.makeText(activity, "Internet Not Avalable !", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        new FirmTypeLoader(activity).execute();
-                    }
-                }
-            });
-
-            viewHolder.button_cert.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        System.out.println(jsonObject.getString("vendorId")+"---"+jsonObject.getString("subdivId"));
-                        PdfOpenHelper.openPdfFromUrl(Urls_this_pro.baseURL + "downloadFile/T/"+jsonObject.getString("subdivId")+"/" + jsonObject.getString("vendorId"),activity);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+            viewHolder.button_cert.setOnClickListener(v -> {
+                try {
+                    System.out.println(jsonObject.getString("vendorId")+"---"+jsonObject.getString("subdivId"));
+                    PdfOpenHelper.openPdfFromUrl(Urls_this_pro.baseURL + "downloadFile/T/"+jsonObject.getString("subdivId")+"/" + jsonObject.getString("vendorId"),activity);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             });
         } catch (JSONException e) {
@@ -237,7 +222,7 @@ public class VendorAdapter extends BaseAdapter {
                 db.deleteAllPatner();
                 db.updateweightDenomination();
                 db.deleteAllNozzle();
-                long c = new DataBaseHelper(activity).saveVenderJsonData(res);
+                long c = new DataBaseHelper(activity).saveVenderJsonData(res,activity);
                 if (CommonPref.getCheckUpdateForApply(activity) && c > 0) {
                     Intent intent = new Intent(activity, ApplyNewActivity.class);
                     intent.putExtra("for", "edit");

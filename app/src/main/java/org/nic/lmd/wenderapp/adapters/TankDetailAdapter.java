@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import org.nic.lmd.wenderapp.R;
+import org.nic.lmd.wenderapp.entities.DenomintionEntity;
+import org.nic.lmd.wenderapp.entities.ProposalTypeEntity;
 import org.nic.lmd.wenderapp.entities.VehicleTankDetails;
+import org.nic.lmd.wenderapp.entities.WeightCategoriesEntity;
 import org.nic.lmd.wenderapp.mdatabase.DataBaseHelper;
 
 import java.util.ArrayList;
@@ -19,7 +22,9 @@ public class TankDetailAdapter extends RecyclerView.Adapter<TankDetailAdapter.My
 
     Activity activity;
     ArrayList<VehicleTankDetails> vehicleTankDetails;
-    String denomintionname;
+    DenomintionEntity denomintionEntity;
+    ProposalTypeEntity proposalTypeEntity;
+    String valid_year;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tank_reg_no, tank_eng_no, tank_chechis_no, tank_own_firm, tank_country,tank_denom;
         public Button remove;
@@ -37,10 +42,13 @@ public class TankDetailAdapter extends RecyclerView.Adapter<TankDetailAdapter.My
     }
 
 
-    public TankDetailAdapter(Activity activity,String denomid) {
+    public TankDetailAdapter(Activity activity,String denomid,String valid_year) {
         this.activity = activity;
         vehicleTankDetails=new DataBaseHelper(this.activity).getTotalTank(denomid);
-        denomintionname=new DataBaseHelper(this.activity).getDesignationName(denomid);
+        denomintionEntity=new DataBaseHelper(this.activity).getWeightDenominationByID(denomid);
+        WeightCategoriesEntity weightCategoriesEntity = new DataBaseHelper(activity).getCategoryById(denomintionEntity.getCategoryId().trim());
+        this.proposalTypeEntity= new DataBaseHelper(activity).getProByID(weightCategoriesEntity.getPro_id().trim());
+        this.valid_year=valid_year;
     }
 
     @Override
@@ -53,7 +61,7 @@ public class TankDetailAdapter extends RecyclerView.Adapter<TankDetailAdapter.My
     @Override
     public void onBindViewHolder(TankDetailAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final VehicleTankDetails vehicleTankDetail=vehicleTankDetails.get(position);
-        holder.tank_denom.setText(denomintionname);
+        holder.tank_denom.setText(denomintionEntity.getDenominationDesc());
         holder.tank_reg_no.setText("" + vehicleTankDetail.getRegNumber());
         holder.tank_eng_no.setText("" + vehicleTankDetail.getEngineNumber());
         holder.tank_chechis_no.setText("" + vehicleTankDetail.getChechisNumber());
@@ -62,6 +70,7 @@ public class TankDetailAdapter extends RecyclerView.Adapter<TankDetailAdapter.My
         holder.remove.setOnClickListener(v -> {
             new DataBaseHelper(activity).deleteTankById(vehicleTankDetail);
             vehicleTankDetails.remove(position);
+            new DataBaseHelper(activity).updateDenomination("", "", denomintionEntity.getValue(), "Y", String.valueOf(vehicleTankDetails.size()), 0, "0", valid_year, proposalTypeEntity.getId().trim(), false);
             notifyDataSetChanged();
         });
     }
