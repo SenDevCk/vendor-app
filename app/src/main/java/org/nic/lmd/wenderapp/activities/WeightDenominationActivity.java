@@ -38,14 +38,14 @@ public class WeightDenominationActivity extends AppCompatActivity implements Vie
         clear_text =  findViewById(R.id.clear_text);
         clear_text.setOnClickListener(this);
         textView =  findViewById(R.id.tv_added_cart);
-        textView.setText("" + new DataBaseHelper(WeightDenominationActivity.this).getAddedWeightCount());
-        Utiilties.didTapButton(textView, WeightDenominationActivity.this);
         listView =  findViewById(R.id.list_denomination);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        textView.setText("" + new DataBaseHelper(WeightDenominationActivity.this).getAddedWeightCount());
+        Utiilties.didTapButton(textView, WeightDenominationActivity.this);
         listView.invalidate();
         listView.setAdapter(new WeightDenominationAdapter(WeightDenominationActivity.this, getIntent().getStringExtra("category_id"), getIntent().getStringExtra("year"), textView));
     }

@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -35,7 +33,6 @@ import org.nic.lmd.wenderapp.asynctask.VenderListLoader;
 import org.nic.lmd.wenderapp.entities.ExpandableListDataPump;
 import org.nic.lmd.wenderapp.entities.UserData;
 import org.nic.lmd.wenderapp.interfaces.VenderListListener;
-import org.nic.lmd.wenderapp.mdatabase.DataBaseHelper;
 import org.nic.lmd.wenderapp.prefrences.CommonPref;
 import org.nic.lmd.wenderapp.utilities.Utiilties;
 
@@ -130,14 +127,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                Toast.makeText(
+             /*   Toast.makeText(
                         getApplicationContext(),
                         expandableListTitle.get(groupPosition)
                                 + " -> "
                                 + expandableListDetail.get(
                                 expandableListTitle.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT
-                ).show();
+                ).show();*/
                 drawer.closeDrawers();
                 if (groupPosition == 0 && childPosition == 0) {
                     if (CommonPref.getCheckUpdateForApply(MainActivity.this)) {
@@ -157,12 +154,9 @@ public class MainActivity extends AppCompatActivity {
 
         list_ven =  findViewById(R.id.list_ven);
         button_new_ap =  findViewById(R.id.button_new_ap);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh() {
-               swipeRefreshLayout.setRefreshing(true);
-               callService();
-           }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            swipeRefreshLayout.setRefreshing(true);
+            callService();
         });
     }
 

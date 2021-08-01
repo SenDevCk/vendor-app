@@ -1315,8 +1315,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             contentValues.put("model_no", "" + instrumentEntity.getModel_no());
             contentValues.put("ser_no", "" + instrumentEntity.getSer_no());
             contentValues.put("e_val", "" + instrumentEntity.getE_val());
-            c = sqLiteDatabase.update("INSTRUMENT_ADD", contentValues, "pro_id=? AND cat_id=? AND cap_id=?", new String[]{instrumentEntity.getPro_id(), instrumentEntity.getCat_id(), instrumentEntity.getCap_id()});
-            if (c <= 0) c = sqLiteDatabase.insert("INSTRUMENT_ADD", null, contentValues);
+            //c = sqLiteDatabase.update("INSTRUMENT_ADD", contentValues, "pro_id=? AND cat_id=? AND cap_id=?", new String[]{instrumentEntity.getPro_id(), instrumentEntity.getCat_id(), instrumentEntity.getCap_id()});
+            //if (c <= 0)
+                c = sqLiteDatabase.insert("INSTRUMENT_ADD", null, contentValues);
             if (c > 0) {
                /* if (getSelectedInsClass(String.valueOf(c)).size() > 0) {
                     deleteSelectedClassByID(String.valueOf(c));
@@ -1324,7 +1325,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 }*/
                 //if (getAddedNozzle(String.valueOf(c)).size()>0){
                 //deleteAllNozzleofINS(String.valueOf(c));
-                this.addNozzle(instrumentEntity.getNozzles(), String.valueOf(c));
+                //this.addNozzle(instrumentEntity.getNozzles(), String.valueOf(c));
                 //}
             }
         } catch (Exception e) {
@@ -2081,7 +2082,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 instrumentEntity.setPro_id(jsonObject_ins.getString("proposalId"));
                 instrumentEntity.setCat_id(jsonObject_ins.getString("categoryId"));
                 instrumentEntity.setCap_id(jsonObject_ins.getString("capacityId"));
-                instrumentEntity.setQuantity(jsonObject_ins.getString("quantity"));
+                //instrumentEntity.setQuantity(jsonObject_ins.getString("quantity"));
+                if ((instrumentEntity.getCat_id().equals("16") && instrumentEntity.getCap_id().equals("219")) || (instrumentEntity.getCat_id().equals("19") && instrumentEntity.getCap_id().equals("225")) || (instrumentEntity.getCat_id().equals("22") && instrumentEntity.getCap_id().equals("230"))) {
+                    instrumentEntity.setQuantity(jsonObject_ins.getString("nozzle_count"));
+                }else {
+                    instrumentEntity.setQuantity(jsonObject_ins.getString("quantity"));
+                }
                 instrumentEntity.setIns_class(jsonObject_ins.getString("classId"));
                 instrumentEntity.setM_or_brand(jsonObject_ins.getString("manufacturer"));
                 instrumentEntity.setVal_year(jsonObject_ins.getString("validYear"));

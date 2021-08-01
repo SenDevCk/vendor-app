@@ -331,7 +331,7 @@ public class ApplyNew5Fragment extends Fragment {
     private void capacitySpinnerBinding() {
         final ArrayList<InsCapacityEntity> insCapacityEntities = new DataBaseHelper(getActivity()).getInsCapacity(cat_id, "1");
         ArrayList<String> list_string_cap = new ArrayList<>();
-        list_string_cap.add("-- SELECT CAPACITY --");
+        list_string_cap.add("-- SELECT TYPE --");
         if (insCapacityEntities.size() > 0) {
             for (InsCapacityEntity insCapacityEntity : insCapacityEntities) {
                 list_string_cap.add(insCapacityEntity.getCapacityDesc());
@@ -352,7 +352,7 @@ public class ApplyNew5Fragment extends Fragment {
                     if (cat_id.equals("21") && cap_id.equals("229")) {
                         text_ip_qt.setHint("Capacity of Tank in Litres *");
                     } else if ((cat_id.equals("16") && cap_id.equals("219")) || (cat_id.equals("19") && cap_id.equals("225")) || (cat_id.equals("22") && cap_id.equals("230"))) {
-                        text_ip_qt.setHint("No of Totlizers *");
+                        text_ip_qt.setHint("No of Nozzles *");
                         edit_cap_min.setVisibility(View.GONE);
                         edit_eval.setVisibility(View.GONE);
                     }else {
@@ -552,12 +552,7 @@ public class ApplyNew5Fragment extends Fragment {
         new AlertDialog.Builder(activity)
                 .setTitle(titel)
                 .setMessage(message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss());
     }
 
 

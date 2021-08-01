@@ -74,7 +74,7 @@
                         android:id="@+id/edit_ap_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name of Business/Shop/Premises *"
+                        android:hint="Business/Shop/Premises Name/Type of Business *"
                         android:singleLine="true"
                         android:inputType="text"/>
 
@@ -642,7 +642,7 @@
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="75dp"
                     android:layout_marginTop="10dp">
 
                     <LinearLayout
@@ -653,6 +653,7 @@
                         android:background="@drawable/rectangle"
                         android:orientation="horizontal"
                         android:paddingTop="5dp"
+                        android:layout_centerVertical="true"
                         tools:ignore="UselessParent">
 
                         <ImageView
@@ -687,12 +688,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="9dp"
-                        android:layout_marginTop="-6dp"
+                        android:layout_marginTop="-9dp"
                         android:background="#fff"
                         android:paddingLeft="3dp"
                         android:paddingTop="3dp"
                         android:paddingRight="3dp"
-                        android:text="Date of Commencement *"
+                        android:text="Date of Commencement(For New Trader)/ Last VC validity date( For old Trader) *"
                         android:textColor="@color/colorAccent" />
                 </RelativeLayout>
 
@@ -721,17 +722,17 @@
                             android:id="@+id/radio1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="11sp"
+                            android:textSize="10sp"
                             android:textColor="@android:color/black"
-                            android:text="At Owner place[AF UR17(2) Applicable if items are not in exclusion List]"/>
+                            android:text="Other than LMO Office [ AF change under 17(2) of BLM(E) Rules 14 ]"/>
 
                         <RadioButton
                             android:id="@+id/radio2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="11sp"
+                            android:textSize="10sp"
                             android:textColor="@android:color/black"
-                            android:text="At Owner place[AF UR17(2) will not be Applicable"/>
+                            android:text="At LMO Office"/>
 
                     </RadioGroup>
                 </LinearLayout>

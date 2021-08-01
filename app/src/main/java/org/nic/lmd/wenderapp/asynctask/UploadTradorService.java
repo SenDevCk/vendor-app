@@ -156,7 +156,13 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                     jsonObject_class.accumulate("name",class_ins.getName());
                 }*/
                 jsonObject.accumulate("classId", Integer.parseInt(instrumentEntity.getIns_class()));
-                jsonObject.accumulate("quantity", Integer.parseInt(instrumentEntity.getQuantity()));
+                if ((instrumentEntity.getCat_id().equals("16") && instrumentEntity.getCap_id().equals("219")) || (instrumentEntity.getCat_id().equals("19") && instrumentEntity.getCap_id().equals("225")) || (instrumentEntity.getCat_id().equals("22") && instrumentEntity.getCap_id().equals("230"))) {
+                    jsonObject.accumulate("quantity", 1);
+                    jsonObject.accumulate("nozzle_count",  Integer.parseInt(instrumentEntity.getQuantity()));
+                }else {
+                    jsonObject.accumulate("quantity", Integer.parseInt(instrumentEntity.getQuantity()));
+                    jsonObject.accumulate("nozzle_count", 0);
+                }
                 jsonObject.accumulate("manufacturer", JSONObject.NULL);
                 jsonObject.accumulate("capacityMax", "" + instrumentEntity.getCap_max());
                 jsonObject.accumulate("capacityMin", "" + instrumentEntity.getCap_min());

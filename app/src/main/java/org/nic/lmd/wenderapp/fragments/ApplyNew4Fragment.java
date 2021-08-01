@@ -58,8 +58,6 @@ public class ApplyNew4Fragment extends Fragment {
     LinearLayout ll_min_max;
     String min_val = "0", max_val = "0";
 
-
-
     public ApplyNew4Fragment() {
         // Required empty public constructor
     }
@@ -102,60 +100,51 @@ public class ApplyNew4Fragment extends Fragment {
         sp_min_den =  getActivity().findViewById(R.id.sp_min_den);
         sp_max_den =  getActivity().findViewById(R.id.sp_max_den);
         sp_denomination =  getActivity().findViewById(R.id.sp_denomination_f4);
-        sp_denomination.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!cat_id.equals("0")) {
-                    Intent intent = new Intent(getActivity(), WeightDenominationActivity.class);
-                    intent.putExtra("category_id", cat_id);
-                    intent.putExtra("year", cat_val_year);
-                    startActivityForResult(intent, 11);
-                } else {
-                    Toast.makeText(getActivity(), "Select Category !", Toast.LENGTH_LONG).show();
-                }
+        sp_denomination.setOnClickListener(view1 -> {
+            if (!cat_id.equals("0")) {
+                Intent intent = new Intent(getActivity(), WeightDenominationActivity.class);
+                intent.putExtra("category_id", cat_id);
+                intent.putExtra("year", cat_val_year);
+                startActivityForResult(intent, 11);
+            } else {
+                Toast.makeText(getActivity(), "Select Category !", Toast.LENGTH_LONG).show();
             }
         });
         sp_valid =  getActivity().findViewById(R.id.sp_valid);
         button_next4 =  getActivity().findViewById(R.id.button_next4);
         button_adddenomination =  getActivity().findViewById(R.id.button_adddenomination);
-        button_next4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                frameLayout =  getActivity().findViewById(R.id.frame_ap_new);
-                ApplyNew5Fragment applyNew5Fragment = new ApplyNew5Fragment();
-                fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_ap_new, applyNew5Fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
+        button_next4.setOnClickListener(view12 -> {
+            frameLayout =  getActivity().findViewById(R.id.frame_ap_new);
+            ApplyNew5Fragment applyNew5Fragment = new ApplyNew5Fragment();
+            fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame_ap_new, applyNew5Fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         });
-        button_adddenomination.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (min_val.equals("0")) {
-                    Toast.makeText(getActivity(), "Select Min Value", Toast.LENGTH_SHORT).show();
-                } else if (max_val.equals("0")) {
-                    Toast.makeText(getActivity(), "Select Max Value", Toast.LENGTH_SHORT).show();
-                }
-                else if (Integer.parseInt(max_val)<Integer.parseInt(min_val)){
-                    Toast.makeText(getActivity(), "MAX value must be greater than MIN value", Toast.LENGTH_SHORT).show();
-                }
-                else if (edit_set_no.getText().toString().trim().equals("") || Integer.parseInt(edit_set_no.getText().toString().trim()) < 1) {
-                    Toast.makeText(getActivity(), "Enter Number of Set", Toast.LENGTH_SHORT).show();
-                    edit_set_no.setError("Enter Number of Set");
+        button_adddenomination.setOnClickListener(view13 -> {
+            if (min_val.equals("0")) {
+                Toast.makeText(getActivity(), "Select Min Value", Toast.LENGTH_SHORT).show();
+            } else if (max_val.equals("0")) {
+                Toast.makeText(getActivity(), "Select Max Value", Toast.LENGTH_SHORT).show();
+            }
+            else if (Integer.parseInt(max_val)<Integer.parseInt(min_val)){
+                Toast.makeText(getActivity(), "MAX value must be greater than MIN value", Toast.LENGTH_SHORT).show();
+            }
+            else if (edit_set_no.getText().toString().trim().equals("") || Integer.parseInt(edit_set_no.getText().toString().trim()) < 1) {
+                Toast.makeText(getActivity(), "Enter Number of Set", Toast.LENGTH_SHORT).show();
+                edit_set_no.setError("Enter Number of Set");
+            } else {
+                long count = new DataBaseHelper(getActivity()).updateWeightDenominationBetween(cat_id, max_val, min_val, Integer.parseInt(edit_set_no.getText().toString().trim()), cat_val_year, pro_id);
+                if (count > 0) {
+                    edit_set_no.setText("");
+                    sp_max_den.setSelection(0);
+                    sp_min_den.setSelection(0);
+                    Toast.makeText(getActivity(), "Added " + count + " denominations", Toast.LENGTH_SHORT).show();
                 } else {
-                    long count = new DataBaseHelper(getActivity()).updateWeightDenominationBetween(cat_id, max_val, min_val, Integer.parseInt(edit_set_no.getText().toString().trim()), cat_val_year, pro_id);
-                    if (count > 0) {
-                        edit_set_no.setText("");
-                        sp_max_den.setSelection(0);
-                        sp_min_den.setSelection(0);
-                        Toast.makeText(getActivity(), "Added " + count + " denominations", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "No data found between range", Toast.LENGTH_SHORT).show();
-                    }
-                    setTotalAdded();
+                    Toast.makeText(getActivity(), "No data found between range", Toast.LENGTH_SHORT).show();
                 }
+                setTotalAdded();
             }
         });
         initialiseSpinnerPro();
@@ -304,14 +293,14 @@ public class ApplyNew4Fragment extends Fragment {
                         if (cat_id.equals("19")) {
                             dialogForClearWeightAndInstrument();
                         } else {
-                            if (new DataBaseHelper(getActivity()).getTankcount()>0){
+                            if (new DataBaseHelper(getActivity()).getTankcount()<=0){
                                 dialogForClearTanks();
                             }
                         }
                     }else{
                         sp_sel_type.setEnabled(true);
                         sp_sel_type.setSelection(0);
-                        if (new DataBaseHelper(getActivity()).getTankcount()>0){
+                        if (new DataBaseHelper(getActivity()).getTankcount()<=0){
                             dialogForClearTanks();
                         }
                     }
@@ -414,8 +403,8 @@ public class ApplyNew4Fragment extends Fragment {
                 (dialog, id) -> {
                     new DataBaseHelper(getActivity()).deleteAllInstruments();
                     new DataBaseHelper(getActivity()).updateweightDenomination();
-                    //new DataBaseHelper(getActivity()).deleteAllPatner();
                     new DataBaseHelper(getActivity()).deleteAllNozzle();
+                    new DataBaseHelper(getActivity()).deleteAllTanks();
                     setTotalAdded();
                     dialog.dismiss();
                 });

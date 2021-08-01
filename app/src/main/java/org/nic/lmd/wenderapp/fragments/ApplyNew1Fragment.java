@@ -96,20 +96,14 @@ public class ApplyNew1Fragment extends Fragment {
         scrollView = (ScrollView) getActivity().findViewById(R.id.scroll_fra1);
         fra_pol_station =  getActivity().findViewById(R.id.fra_pol_station);
         bt_est_date =  getActivity().findViewById(R.id.bt_est_date);
-        bt_est_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag = 1;
-                ShowDialog();
-            }
+        bt_est_date.setOnClickListener(view14 -> {
+            flag = 1;
+            ShowDialog();
         });
         bt_lic_date =  getActivity().findViewById(R.id.bt_lic_date);
-        bt_lic_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag = 2;
-                ShowDialog();
-            }
+        bt_lic_date.setOnClickListener(view1 -> {
+            flag = 2;
+            ShowDialog();
         });
         tv_est_date =  getActivity().findViewById(R.id.tv_est_date);
         tv_lic_date = getActivity().findViewById(R.id.tv_lic_date);
@@ -125,32 +119,14 @@ public class ApplyNew1Fragment extends Fragment {
                 ShowDialog2();
             }
         });
-        tv_lic_date_clr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_lic_date.setText("");
-            }
-        });
-        tv_est_date_clr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_est_date.setText("");
-            }
-        });
-        tv_reg_date_clr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_reg_date.setText("");
-            }
-        });
+        tv_lic_date_clr.setOnClickListener(v -> tv_lic_date.setText(""));
+        tv_est_date_clr.setOnClickListener(v -> tv_est_date.setText(""));
+        tv_reg_date_clr.setOnClickListener(v -> tv_reg_date.setText(""));
         tv_com_date = (TextView) getActivity().findViewById(R.id.tv_com_date);
         bt_com_date =  getActivity().findViewById(R.id.bt_com_date);
-        bt_com_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag = 4;
-                ShowDialog2();
-            }
+        bt_com_date.setOnClickListener(view12 -> {
+            flag = 4;
+            ShowDialog2();
         });
         sp_district =  getActivity().findViewById(R.id.sp_dist);
         sp_permisses =  getActivity().findViewById(R.id.sp_permisses);
@@ -165,26 +141,23 @@ public class ApplyNew1Fragment extends Fragment {
         initializeFirmSpiner();
 
         button_next1 =  getActivity().findViewById(R.id.button_next1);
-        button_next1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validate()) {
-                    long c = addVenderDetails();
-                    if (c > 0) {
-                        GlobalVariable.count_data = new DataBaseHelper(getActivity()).getIdVEN();
-                        frame_ap_new =  getActivity().findViewById(R.id.frame_ap_new);
-                        ApplyNew2Fragment applyNew2Fragment = new ApplyNew2Fragment();
-                        fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frame_ap_new, applyNew2Fragment);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                    } else {
-                        Toast.makeText(getActivity(), "Error in saving vender details", Toast.LENGTH_SHORT).show();
-                    }
+        button_next1.setOnClickListener(view13 -> {
+            if (validate()) {
+                long c = addVenderDetails();
+                if (c > 0) {
+                    GlobalVariable.count_data = new DataBaseHelper(getActivity()).getIdVEN();
+                    frame_ap_new =  getActivity().findViewById(R.id.frame_ap_new);
+                    ApplyNew2Fragment applyNew2Fragment = new ApplyNew2Fragment();
+                    fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_ap_new, applyNew2Fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 } else {
-                    Utiilties.scrollToView(scrollView, view_spin);
+                    Toast.makeText(getActivity(), "Error in saving vender details", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Utiilties.scrollToView(scrollView, view_spin);
             }
         });
 
@@ -200,18 +173,13 @@ public class ApplyNew1Fragment extends Fragment {
         edit_lice_no =  getActivity().findViewById(R.id.edit_lice_no);
         edit_reg_f1 =  getActivity().findViewById(R.id.edit_reg_f2);
         rd_gp_place =  getActivity().findViewById(R.id.rd_gp_place);
-        rd_gp_place.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // find which radio button is selected
-                if (checkedId == R.id.radio1) {
-                    place = "OWNER OFFICE";
-                } else {
-                    place = "LMO OFFICE";
-                }
+        rd_gp_place.setOnCheckedChangeListener((group, checkedId) -> {
+            // find which radio button is selected
+            if (checkedId == R.id.radio1) {
+                place = "Other Than LMO Office";
+            } else {
+                place = "At LMO Office";
             }
-
         });
 
     }
@@ -243,12 +211,12 @@ public class ApplyNew1Fragment extends Fragment {
         Cursor cursor = db.rawQuery("Select shop_name,add1,add2,mobile,email,landmark,landline,pin,city,date_of_est,licence_date,reg_no,date_of_comm,date_of_reg,licence_no,dis_id,block_id,premise_type,type_firm,thana_id from VENDER_DETAILS where _id='" + GlobalVariable.count_data + "'", null);
         while (cursor.moveToNext()) {
             place=cursor.isNull(cursor.getColumnIndex("place_of_var"))?"": cursor.getString(cursor.getColumnIndex("place_of_var"));
-            if (place.equals("OWNER OFFICE")) {
-                radioButton1 =  rd_gp_place.findViewById(R.id.radio1);
-                radioButton1.setChecked(true);
-            } else {
+            if (place.equals("At LMO Office")) {
                 radioButton2 =  rd_gp_place.findViewById(R.id.radio2);
                 radioButton2.setChecked(true);
+            } else {
+                radioButton1 =  rd_gp_place.findViewById(R.id.radio1);
+                radioButton1.setChecked(true);
             }
             edit_ap_name.setText(cursor.isNull(cursor.getColumnIndex("shop_name"))?"": cursor.getString(cursor.getColumnIndex("shop_name")));
             edit_add1.setText(cursor.isNull(cursor.getColumnIndex("add1"))?"":cursor.getString(cursor.getColumnIndex("add1")));
