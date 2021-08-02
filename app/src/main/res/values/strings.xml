@@ -12,5 +12,7 @@
     <string name="denomination">Denomination</string>
     <string name="tank_details">Vehicle Tank Details Entry</string>
     <string name="not_avalable">N/A</string>
+    <string name="other_than_lmo">Other than LMO Office [ AF change under 17(2) of BLM(E) Rules 14 ]</string>
+    <string name="lmo_place">At LMO Office</string>
 
 </resources>

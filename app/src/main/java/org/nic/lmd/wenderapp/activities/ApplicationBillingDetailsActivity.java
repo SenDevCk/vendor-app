@@ -82,9 +82,9 @@ public class ApplicationBillingDetailsActivity extends AppCompatActivity impleme
         rd_gp_place.setOnCheckedChangeListener((group, checkedId) -> {
             // find which radio button is selected
             if (checkedId == R.id.radio1) {
-                place = "OWNER OFFICE";
+                place = "Other Than LMO Office";
             } else {
-                place = "LMO OFFICE";
+                place = "LMO office";
             }
         });
 
@@ -122,12 +122,12 @@ public class ApplicationBillingDetailsActivity extends AppCompatActivity impleme
                     jsonObject = jsonObject_res.getJSONObject("data");
                     if (!jsonObject.isNull("placeOfverification"))
                         place = jsonObject.getString("placeOfverification");
-                    if (place.equals("OWNER OFFICE")) {
-                        radioButton1 = rd_gp_place.findViewById(R.id.radio1);
-                        radioButton1.setChecked(true);
-                    } else {
+                    if (place.equals("At LMO Office")) {
                         radioButton2 = rd_gp_place.findViewById(R.id.radio2);
                         radioButton2.setChecked(true);
+                    } else {
+                        radioButton1 = rd_gp_place.findViewById(R.id.radio1);
+                        radioButton1.setChecked(true);
                     }
                     tv_pre_type.setText(""+new DataBaseHelper(ApplicationBillingDetailsActivity.this).getNatureofBusinessByID(jsonObject.getString("natureOfBusiness").trim()).getValue());
                     tv_vid.setText(""+jsonObject.getString("vendorId"));

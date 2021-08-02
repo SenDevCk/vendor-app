@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 if (groupPosition == 0 && childPosition == 0) {
                     if (CommonPref.getCheckUpdateForApply(MainActivity.this)) {
                         Intent intent = new Intent(MainActivity.this, ApplyNewActivity.class);
+                        intent.putExtra("for", "new");
                         startActivity(intent);
                     } else if (!Utiilties.isOnline(MainActivity.this)) {
                         Toast.makeText(MainActivity.this, "Internet Not Avalable !", Toast.LENGTH_SHORT).show();
@@ -219,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
     public void ApplyNew(View view) {
         if (CommonPref.getCheckUpdateForApply(MainActivity.this)) {
             Intent intent = new Intent(MainActivity.this, ApplyNewActivity.class);
+            intent.putExtra("for", "new");
             startActivity(intent);
         }else if (!Utiilties.isOnline(MainActivity.this)){
             Toast.makeText(this, "Internet Not Avalable !", Toast.LENGTH_SHORT).show();

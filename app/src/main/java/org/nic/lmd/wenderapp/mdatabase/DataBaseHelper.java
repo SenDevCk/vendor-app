@@ -2061,11 +2061,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     int qt=Integer.parseInt(denomintionEntity.getQuantity())+1;
                     VehicleTankDetails vehicleTankDetails=new VehicleTankDetails();
                     vehicleTankDetails.setDenomId(Integer.parseInt(denomintionEntity.getValue()));
-                    vehicleTankDetails.setRegNumber(jsonObject_deno.getString("vechile_registraction_no"));
-                    vehicleTankDetails.setEngineNumber(jsonObject_deno.getString("vechile_engine_no"));
-                    vehicleTankDetails.setChechisNumber(jsonObject_deno.getString("vechile_chesis_no"));
-                    vehicleTankDetails.setOwnerFirmName(jsonObject_deno.getString("vechile_owner_name"));
-                    vehicleTankDetails.setCountry(jsonObject_deno.getString("country_name"));
+                    vehicleTankDetails.setRegNumber(jsonObject_deno.getString("vechileRegistractionNo"));
+                    vehicleTankDetails.setEngineNumber(jsonObject_deno.getString("vechileEngineNo"));
+                    vehicleTankDetails.setChechisNumber(jsonObject_deno.getString("vechileChesisNo"));
+                    vehicleTankDetails.setOwnerFirmName(jsonObject_deno.getString("vechileOwnerName"));
+                    vehicleTankDetails.setCountry(jsonObject_deno.getString("countryName"));
                     addTank(vehicleTankDetails);
                     c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y",String.valueOf(qt), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
                 }else {
@@ -2097,7 +2097,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 instrumentEntity.setSer_no(jsonObject_ins.getString("mserialNo"));
                 instrumentEntity.setE_val(jsonObject_ins.getString("evalue"));
                 c = addInstrument(instrumentEntity);
-                if (c > 0) {
+               /* if (c > 0) {
                     ArrayList<Nozzle> nozzles = new ArrayList<>();
                     JSONArray jsonArray_ext = jsonObject_ins.getJSONArray("extensions");
                     for (int k = 0; k < jsonArray_ext.length(); k++) {
@@ -2117,7 +2117,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     else Log.e("error", "***** Nozzle not saving in json ********");
                 } else {
                     Log.e("error", "***** Instrument not Saved *****");
-                }
+                }*/
             }
         } catch (Exception e) {
             Log.e("ERROR 1", e.getLocalizedMessage());
@@ -2420,7 +2420,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void deleteAllTanks() {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            db.execSQL("delete from VEHICLE_TANK");
+            if (getTankcount() > 0) {
+                db.execSQL("delete from VEHICLE_TANK");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("error", e.getMessage());

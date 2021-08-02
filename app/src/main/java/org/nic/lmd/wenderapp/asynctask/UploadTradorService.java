@@ -250,11 +250,11 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
             jsonObject.accumulate("nextverificationQtr", JSONObject.NULL);
             jsonObject.accumulate("duesQtr", JSONObject.NULL);
             jsonObject.accumulate("status", JSONObject.NULL);
-            jsonObject.accumulate("vechile_registraction_no", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getRegNumber());
-            jsonObject.accumulate("vechile_engine_no", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getEngineNumber());
-            jsonObject.accumulate("vechile_chesis_no", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getChechisNumber());
-            jsonObject.accumulate("vechile_owner_name", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getOwnerFirmName());
-            jsonObject.accumulate("country_name", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getCountry());
+            jsonObject.accumulate("vechileRegistractionNo", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getRegNumber());
+            jsonObject.accumulate("vechileEngineNo", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getEngineNumber());
+            jsonObject.accumulate("vechileChesisNo", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getChechisNumber());
+            jsonObject.accumulate("vechileOwnerName", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getOwnerFirmName());
+            jsonObject.accumulate("countryName", (vehicleTankDetail.getDenomId() == 0) ? JSONObject.NULL : vehicleTankDetail.getCountry());
         } catch (Exception e) {
             e.printStackTrace();
         }

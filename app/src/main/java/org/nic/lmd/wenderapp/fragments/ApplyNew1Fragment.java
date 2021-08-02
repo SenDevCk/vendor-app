@@ -95,7 +95,7 @@ public class ApplyNew1Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        scrollView = (ScrollView) getActivity().findViewById(R.id.scroll_fra1);
+        scrollView = getActivity().findViewById(R.id.scroll_fra1);
         fra_pol_station =  getActivity().findViewById(R.id.fra_pol_station);
         bt_est_date =  getActivity().findViewById(R.id.bt_est_date);
         bt_est_date.setOnClickListener(view14 -> {
@@ -329,7 +329,8 @@ public class ApplyNew1Fragment extends Fragment {
         }
         else if(district_f1.getId().trim().equals("212")) {
             blocks= blocks2.stream().
-                    filter(block -> (block.getValue().equals(String.valueOf(1965)))||(block.getValue().equals(String.valueOf(5001)))||(block.getValue().equals(String.valueOf(5002)))||(block.getValue().equals(5003))||(block.getValue().equals(String.valueOf(5004)))).collect(Collectors.toList());
+                    filter(block -> (block.getValue().equals(String.valueOf(1965)))||(block.getValue().equals(String.valueOf(5001)))||(block.getValue().equals(String.valueOf(5002)))||(block.getValue().equals(5003))||(block.getValue().equals(String.valueOf(5004)))).
+                    collect(Collectors.toList());
         }else{
             blocks=blocks2;
         }
@@ -347,7 +348,7 @@ public class ApplyNew1Fragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i > 0) {
                     block_f1 = finalBlocks.get(i - 1);
-                    if (block_f1.getDistrictId().trim().equals("212")){
+                    if (district_f1.getId().trim().equals("212")){
                         fra_pol_station.setVisibility(View.VISIBLE);
                     }
                     else{
@@ -359,7 +360,6 @@ public class ApplyNew1Fragment extends Fragment {
                     initializeThana();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -367,6 +367,9 @@ public class ApplyNew1Fragment extends Fragment {
         });
         if (block_f1!=null && stringArrayList2.contains(block_f1.getName().trim())){
             sp_block.setSelection(((ArrayAdapter<String>) sp_block.getAdapter()).getPosition(block_f1.getName().trim()));
+            if (getActivity().getIntent().getStringExtra("for").equals("edit")){
+                sp_block.setEnabled(false);
+            }
         }
     }
 
@@ -529,7 +532,7 @@ public class ApplyNew1Fragment extends Fragment {
             Toast.makeText(getActivity(), "Select Block !", Toast.LENGTH_SHORT).show();
             view_spin = sp_block;
         }
-        else if (thana == null && district_f1.getId().trim().equals("212")) {
+        else if (thana == null && district_f1.getId().trim().equals("212") && ((block_f1.getValue().equals(String.valueOf(1965)))||(block_f1.getValue().equals(String.valueOf(5001)))||(block_f1.getValue().equals(String.valueOf(5002)))||(block_f1.getValue().equals(5003))||(block_f1.getValue().equals(String.valueOf(5004))))) {
             Toast.makeText(getActivity(), "Select Thana !", Toast.LENGTH_SHORT).show();
             view_spin = sp_subdiv;
          }

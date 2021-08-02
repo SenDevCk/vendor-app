@@ -51,7 +51,7 @@ public class ApplyNew4Fragment extends Fragment {
     Spinner sp_proposal_type_f4, sp_cat_f4, sp_valid, sp_sel_type;
     Spinner sp_min_den, sp_max_den;
     TextView sp_denomination;
-    static String pro_id = "0", cat_id = "0", cat_val_year = "0";
+    String pro_id = "0", cat_id = "0", cat_val_year = "0";
     TextView text_get_all;
     EditText edit_set_no;
     String[] sel_type = {"-- SELECT TYPE --", "Individual", "Set"};
@@ -281,7 +281,6 @@ public class ApplyNew4Fragment extends Fragment {
                     frame_sel_type.setVisibility(View.VISIBLE);
                     cat_id = weightCategories.get(i - 1).getId().trim();
                     cat_val_year = weightCategories.get(i - 1).getValidity().trim();
-                    validityBinding();
                     if (Integer.parseInt(cat_id)>10) {
                         sp_sel_type.setSelection(1);
                         sp_sel_type.setEnabled(false);
@@ -302,6 +301,7 @@ public class ApplyNew4Fragment extends Fragment {
                 }
                 maxdenominationBinding();
                 mindenominationBinding();
+                validityBinding();
             }
 
             @Override
@@ -364,7 +364,7 @@ public class ApplyNew4Fragment extends Fragment {
     private void validityBinding() {
         //final ArrayList<DenomintionEntity> denomintionEntities = new DataBaseHelper(getActivity()).getWeightDenomination(pro_id);
         ArrayList<String> list_string_denomi = new ArrayList<>();
-        list_string_denomi.add("-- SELECT Validity --");
+        list_string_denomi.add("-- Select Validity --");
         list_string_denomi.add("1");
         list_string_denomi.add("2");
         list_string_denomi.add("3");
@@ -375,10 +375,10 @@ public class ApplyNew4Fragment extends Fragment {
         sp_valid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i <= 0) {
-                    cat_val_year = "0";
-                } else {
+                if (i > 0) {
                     cat_val_year=adapterView.getItemAtPosition(i).toString();
+                } else {
+                    cat_val_year = "0";
                 }
             }
 
@@ -389,6 +389,7 @@ public class ApplyNew4Fragment extends Fragment {
         });
         sp_valid.setEnabled(true);
         if(!cat_val_year.equals("0")) sp_valid.setSelection(((ArrayAdapter<String>) sp_valid.getAdapter()).getPosition(cat_val_year));
+        else sp_valid.setSelection(0);
         sp_valid.setEnabled(false);
     }
 

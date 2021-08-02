@@ -3,6 +3,7 @@ package org.nic.lmd.wenderapp.adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -217,11 +218,13 @@ public class VendorAdapter extends BaseAdapter {
         VenderDataSingle.listenVendor(new VendorDataListener() {
             @Override
             public void responseFound(String res) {
+                System.out.println(res);
                 DataBaseHelper db = new DataBaseHelper(activity);
                 db.deleteAllInstruments();
                 db.deleteAllPatner();
                 db.updateweightDenomination();
                 db.deleteAllNozzle();
+                db.deleteAllTanks();
                 long c = new DataBaseHelper(activity).saveVenderJsonData(res,activity);
                 if (CommonPref.getCheckUpdateForApply(activity) && c > 0) {
                     Intent intent = new Intent(activity, ApplyNewActivity.class);
@@ -238,6 +241,7 @@ public class VendorAdapter extends BaseAdapter {
 
             @Override
             public void responseNotFound(String msg) {
+                Log.e("error",msg);
                 Toast.makeText(activity, "" + msg, Toast.LENGTH_SHORT).show();
             }
         });

@@ -724,7 +724,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
                             android:textColor="@android:color/black"
-                            android:text="Other than LMO Office [ AF change under 17(2) of BLM(E) Rules 14 ]"/>
+                            android:text="@string/other_than_lmo"/>
 
                         <RadioButton
                             android:id="@+id/radio2"
@@ -732,7 +732,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
                             android:textColor="@android:color/black"
-                            android:text="At LMO Office"/>
+                            android:text="@string/lmo_place"/>
 
                     </RadioGroup>
                 </LinearLayout>

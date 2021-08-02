@@ -202,7 +202,7 @@
                             android:id="@+id/radio1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="At Owner place[AF UR17(2) Applicable if items are not in exclusion List]"
+                            android:text="@string/other_than_lmo"
                             android:textColor="@android:color/black"
                             android:textSize="11sp" />
 
@@ -210,7 +210,7 @@
                             android:id="@+id/radio2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="At Owner place[AF UR17(2) will not be Applicable"
+                            android:text="@string/lmo_place"
                             android:textColor="@android:color/black"
                             android:textSize="11sp" />
 
