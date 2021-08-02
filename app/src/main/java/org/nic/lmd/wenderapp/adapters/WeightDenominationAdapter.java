@@ -32,6 +32,7 @@ import org.nic.lmd.wenderapp.entities.DenomintionEntity;
 import org.nic.lmd.wenderapp.entities.ProposalTypeEntity;
 import org.nic.lmd.wenderapp.entities.VehicleTankDetails;
 import org.nic.lmd.wenderapp.entities.WeightCategoriesEntity;
+import org.nic.lmd.wenderapp.interfaces.EventHandler;
 import org.nic.lmd.wenderapp.mdatabase.DataBaseHelper;
 import org.nic.lmd.wenderapp.utilities.Utiilties;
 
@@ -45,15 +46,14 @@ public class WeightDenominationAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
     TextView textView;
     String country="";
+
     public WeightDenominationAdapter(Activity activity, String cot_id, String val_year, TextView textView) {
         this.activity = activity;
         this.cot_id = cot_id;
         this.val_year = val_year;
         this.textView = textView;
         layoutInflater = this.activity.getLayoutInflater();
-        if (this.cot_id.equals("0")) denomintionEntities = new DataBaseHelper(activity).getWeightDenomination(this.cot_id, "0");
-        else denomintionEntities = new DataBaseHelper(activity).getWeightDenomination(this.cot_id, "1");
-
+        notifyList();
     }
 
     @Override
@@ -172,8 +172,17 @@ public class WeightDenominationAdapter extends BaseAdapter {
         ToggleButton tog_denomination;
         ImageView img_inc, img_dec;
     }
+   private void notifyList(){
+       denomintionEntities=null;
+       if (this.cot_id.equals("0")) denomintionEntities = new DataBaseHelper(activity).getWeightDenomination(this.cot_id, "0");
+       else denomintionEntities = new DataBaseHelper(activity).getWeightDenomination(this.cot_id, "1");
 
+   }
  public void AlertDialogForNozzleEntry(final DenomintionEntity denomintionEntity,final ProposalTypeEntity proposalTypeEntity) {
+        TankDetailAdapter.handleEvent(() -> {
+            notifyList();
+            notifyDataSetChanged();
+        });
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.tank_entry_dialog);
         dialog.setTitle("Tank Entry");
@@ -217,11 +226,13 @@ public class WeightDenominationAdapter extends BaseAdapter {
                     edit_tank_ow_name.setText("");
                     sp_contries.setSelection(0);
                     populateProductRecycler(list_tanks,denomintionEntity);
-                    Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show();
-                    textView.setText("" + new DataBaseHelper(activity).getAddedWeightCount());
-                    Utiilties.didTapButton(textView, activity);
                     int count=new DataBaseHelper(activity).getTotalTank(String.valueOf(denomintionEntity.getValue())).size();
                     new DataBaseHelper(activity).updateDenomination("", "", denomintionEntity.getValue(), "Y", String.valueOf(count), 0, "0", val_year, proposalTypeEntity.getId().trim(), false);
+                    textView.setText("" + new DataBaseHelper(activity).getAddedWeightCount());
+                    Utiilties.didTapButton(textView, activity);
+                    notifyList();
+                    notifyDataSetChanged();
+                    Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(activity, "Not Saved", Toast.LENGTH_SHORT).show();
                 }
@@ -231,7 +242,7 @@ public class WeightDenominationAdapter extends BaseAdapter {
     }
     private void populateProductRecycler(RecyclerView list_tanks,final DenomintionEntity denomintionEntity) {
                list_tanks.invalidate();
-               TankDetailAdapter nozzleRecyclerAdapter = new TankDetailAdapter(activity,denomintionEntity.getValue(),val_year);
+               TankDetailAdapter nozzleRecyclerAdapter = new TankDetailAdapter(activity,denomintionEntity.getValue(),val_year,textView);
                RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(activity);
                list_tanks.setLayoutManager(mLayoutManager2);
                list_tanks.setItemAnimator(new DefaultItemAnimator());

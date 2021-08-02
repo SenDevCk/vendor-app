@@ -81,17 +81,14 @@ public class ApplyNew4Fragment extends Fragment {
         ll_min_max =  getActivity().findViewById(R.id.ll_min_max);
         ll_min_max.setVisibility(View.GONE);
         text_get_all =  getActivity().findViewById(R.id.text_get_all);
-        text_get_all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (new DataBaseHelper(getActivity()).getAddedWeightCount() > 0) {
-                    Intent intent = new Intent(getActivity(), WeightDenominationActivity.class);
-                    intent.putExtra("category_id", "0");
-                    intent.putExtra("year", "0");
-                    startActivityForResult(intent, 11);
-                } else {
-                    Toast.makeText(getActivity(), "Nothing added", Toast.LENGTH_SHORT).show();
-                }
+        text_get_all.setOnClickListener(view14 -> {
+            if (new DataBaseHelper(getActivity()).getAddedWeightCount() > 0) {
+                Intent intent = new Intent(getActivity(), WeightDenominationActivity.class);
+                intent.putExtra("category_id", "0");
+                intent.putExtra("year", "0");
+                startActivityForResult(intent, 11);
+            } else {
+                Toast.makeText(getActivity(), "Nothing added", Toast.LENGTH_SHORT).show();
             }
         });
         sp_proposal_type_f4 =  getActivity().findViewById(R.id.sp_proposal_type_f4);
@@ -284,9 +281,7 @@ public class ApplyNew4Fragment extends Fragment {
                     frame_sel_type.setVisibility(View.VISIBLE);
                     cat_id = weightCategories.get(i - 1).getId().trim();
                     cat_val_year = weightCategories.get(i - 1).getValidity().trim();
-                    sp_valid.setEnabled(true);
-                    sp_valid.setSelection(((ArrayAdapter<String>) sp_valid.getAdapter()).getPosition(weightCategories.get(i - 1).getValidity().trim()));
-                    sp_valid.setEnabled(false);
+                    validityBinding();
                     if (Integer.parseInt(cat_id)>10) {
                         sp_sel_type.setSelection(1);
                         sp_sel_type.setEnabled(false);
@@ -375,14 +370,15 @@ public class ApplyNew4Fragment extends Fragment {
         list_string_denomi.add("3");
         list_string_denomi.add("4");
         list_string_denomi.add("5");
+        sp_valid.invalidate();
         sp_valid.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, list_string_denomi));
         sp_valid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i <= 0) {
-                    //GlobalVariable.nature_of_business = "0";
+                    cat_val_year = "0";
                 } else {
-                    //GlobalVariable.nature_of_business = natureOfRequests.get(i - 1).getId();
+                    cat_val_year=adapterView.getItemAtPosition(i).toString();
                 }
             }
 
@@ -391,6 +387,9 @@ public class ApplyNew4Fragment extends Fragment {
 
             }
         });
+        sp_valid.setEnabled(true);
+        if(!cat_val_year.equals("0")) sp_valid.setSelection(((ArrayAdapter<String>) sp_valid.getAdapter()).getPosition(cat_val_year));
+        sp_valid.setEnabled(false);
     }
 
     private void dialogForClearWeightAndInstrument() {

@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/eng_no"
-                android:inputType="numberDecimal"
+                android:inputType="textCapWords"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/chechis_number"
-                android:inputType="numberDecimal"
+                android:inputType="textCapWords"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/firm_own_name"
-                android:inputType="numberDecimal"
+                android:inputType="text"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>

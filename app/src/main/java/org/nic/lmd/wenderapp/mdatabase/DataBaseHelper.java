@@ -2084,7 +2084,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 instrumentEntity.setCap_id(jsonObject_ins.getString("capacityId"));
                 //instrumentEntity.setQuantity(jsonObject_ins.getString("quantity"));
                 if ((instrumentEntity.getCat_id().equals("16") && instrumentEntity.getCap_id().equals("219")) || (instrumentEntity.getCat_id().equals("19") && instrumentEntity.getCap_id().equals("225")) || (instrumentEntity.getCat_id().equals("22") && instrumentEntity.getCap_id().equals("230"))) {
-                    instrumentEntity.setQuantity(jsonObject_ins.getString("nozzle_count"));
+                    instrumentEntity.setQuantity(jsonObject_ins.getString("nozzels"));
                 }else {
                     instrumentEntity.setQuantity(jsonObject_ins.getString("quantity"));
                 }

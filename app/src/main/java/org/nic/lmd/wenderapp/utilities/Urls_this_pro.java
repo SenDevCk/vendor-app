@@ -7,10 +7,11 @@ package org.nic.lmd.wenderapp.utilities;
 public class Urls_this_pro {
 
     //local
-    //public static final String baseURL="http://192.168.0.151:65000/api/";
+     public static final String baseURL="http://192.168.0.151:65001/app/";
    
     //live
-    public static final String baseURL="https://wemmis.bih.nic.in/app/";
+    //public static final String baseURL="https://wemmis.bih.nic.in/app/";
+    //public static final String baseURL="https://maaptaul.bih.nic.in/app/";
 
     public static final String LOG_IN_URL = baseURL+"vendor/login";
     public static final String LOAD_REGISTER = baseURL+"user/update";

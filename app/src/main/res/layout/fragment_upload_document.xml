@@ -754,5 +754,205 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Last Verification Certificate/Money Receipt (for Old Trader)"
+            android:textColor="@color/blue" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done12"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Registration Certificate for Vehicle (In case of Tanker)"
+            android:textColor="@color/blue" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done13"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Any Other"
+            android:textColor="@color/blue" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/button_chose_d14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/blue_button"
+                android:text="Select"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tv_d14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:hint="Name For PDF"
+                android:padding="7dp" />
+
+            <Button
+                android:id="@+id/button_d14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".175"
+                android:background="@drawable/green_button"
+                android:text="Upload" />
+            <LinearLayout
+                android:id="@+id/ll_img_done14"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorAccent" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/done" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

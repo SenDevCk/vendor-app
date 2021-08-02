@@ -60,12 +60,12 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button button_chose_d1, button_chose_d2, button_chose_d3, button_chose_d4, button_chose_d5, button_chose_d6, button_chose_d7, button_chose_d8, button_chose_d9, button_chose_d10,button_chose_d11;
-    private Button button_d1, button_d2, button_d3, button_d4, button_d5, button_d6, button_d7, button_d8, button_d9, button_d10,button_d11;
-    private TextView tv_d1, tv_d2, tv_d3, tv_d4, tv_d5, tv_d6, tv_d7, tv_d8, tv_d9, tv_d10, tv_d11;
-    private Uri filePath1, filePath2, filePath3, filePath4, filePath5, filePath6, filePath7, filePath8, filePath9, filePath10, filePath11;
+    private Button button_chose_d1, button_chose_d2, button_chose_d3, button_chose_d4, button_chose_d5, button_chose_d6, button_chose_d7, button_chose_d8, button_chose_d9, button_chose_d10,button_chose_d11,button_chose_d12,button_chose_d13,button_chose_d14;
+    private Button button_d1, button_d2, button_d3, button_d4, button_d5, button_d6, button_d7, button_d8, button_d9, button_d10,button_d11,button_d12,button_d13,button_d14;
+    private TextView tv_d1, tv_d2, tv_d3, tv_d4, tv_d5, tv_d6, tv_d7, tv_d8, tv_d9, tv_d10, tv_d11,tv_d12,tv_d13,tv_d14;
+    private Uri filePath1, filePath2, filePath3, filePath4, filePath5, filePath6, filePath7, filePath8, filePath9, filePath10, filePath11,filePath12,filePath13,filePath14;
     private static final int REQUEST_PERMISSIONS = 100;
-    LinearLayout ll_img_done1, ll_img_done2, ll_img_done3, ll_img_done4, ll_img_done5, ll_img_done6, ll_img_done7, ll_img_done8, ll_img_done9, ll_img_done10,ll_img_done11;
+    LinearLayout ll_img_done1, ll_img_done2, ll_img_done3, ll_img_done4, ll_img_done5, ll_img_done6, ll_img_done7, ll_img_done8, ll_img_done9, ll_img_done10,ll_img_done11,ll_img_done12,ll_img_done13,ll_img_done14;
 
     public UploadDocumentFragment() {
         // Required empty public constructor
@@ -151,6 +151,9 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
         ll_img_done9 =  getActivity().findViewById(R.id.ll_img_done9);
         ll_img_done10 =  getActivity().findViewById(R.id.ll_img_done10);
         ll_img_done11 =  getActivity().findViewById(R.id.ll_img_done11);
+        ll_img_done12 =  getActivity().findViewById(R.id.ll_img_done12);
+        ll_img_done13 =  getActivity().findViewById(R.id.ll_img_done13);
+        ll_img_done14 =  getActivity().findViewById(R.id.ll_img_done14);
 
         button_chose_d1 =  getActivity().findViewById(R.id.button_chose_d1);
         button_chose_d2 =  getActivity().findViewById(R.id.button_chose_d2);
@@ -163,6 +166,9 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
         button_chose_d9 =  getActivity().findViewById(R.id.button_chose_d9);
         button_chose_d10 =  getActivity().findViewById(R.id.button_chose_d10);
         button_chose_d11 =  getActivity().findViewById(R.id.button_chose_d11);
+        button_chose_d12 =  getActivity().findViewById(R.id.button_chose_d12);
+        button_chose_d13 =  getActivity().findViewById(R.id.button_chose_d13);
+        button_chose_d14 =  getActivity().findViewById(R.id.button_chose_d14);
 
         button_d1 =  getActivity().findViewById(R.id.button_d1);
         button_d2 =  getActivity().findViewById(R.id.button_d2);
@@ -175,6 +181,9 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
         button_d9 =  getActivity().findViewById(R.id.button_d9);
         button_d10 =  getActivity().findViewById(R.id.button_d10);
         button_d11 =  getActivity().findViewById(R.id.button_d11);
+        button_d12 =  getActivity().findViewById(R.id.button_d12);
+        button_d13 =  getActivity().findViewById(R.id.button_d13);
+        button_d14 =  getActivity().findViewById(R.id.button_d14);
 
         tv_d1 =  getActivity().findViewById(R.id.tv_d1);
         tv_d2 =  getActivity().findViewById(R.id.tv_d2);
@@ -187,6 +196,9 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
         tv_d9 =  getActivity().findViewById(R.id.tv_d9);
         tv_d10 =  getActivity().findViewById(R.id.tv_d10);
         tv_d11 =  getActivity().findViewById(R.id.tv_d11);
+        tv_d12 =  getActivity().findViewById(R.id.tv_d12);
+        tv_d13 =  getActivity().findViewById(R.id.tv_d13);
+        tv_d14 =  getActivity().findViewById(R.id.tv_d14);
 
         button_chose_d1.setOnClickListener(this);
         button_d1.setOnClickListener(this);
@@ -210,6 +222,12 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
         button_d10.setOnClickListener(this);
         button_chose_d11.setOnClickListener(this);
         button_d11.setOnClickListener(this);
+        button_chose_d12.setOnClickListener(this);
+        button_d12.setOnClickListener(this);
+        button_chose_d13.setOnClickListener(this);
+        button_d13.setOnClickListener(this);
+        button_chose_d14.setOnClickListener(this);
+        button_d14.setOnClickListener(this);
 
     }
     ArrayList<MediaFile> files =new ArrayList<>();
@@ -431,6 +449,27 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
                 file_size_in_kb = Integer.parseInt(String.valueOf(file.length()/1024));
                 if (file_size_in_kb<=1370) tv_d11.setText(fname);
                 else Toast.makeText(getActivity(), "Max file size 1370 kb", Toast.LENGTH_SHORT).show();
+            }else if (PICK_PDF_REQUEST == 12) {
+                filePath12 = data.getData();
+                file = new File(filePath12.getPath());
+                fname = file.getAbsolutePath();
+                file_size_in_kb = Integer.parseInt(String.valueOf(file.length()/1024));
+                if (file_size_in_kb<=1370) tv_d12.setText(fname);
+                else Toast.makeText(getActivity(), "Max file size 1370 kb", Toast.LENGTH_SHORT).show();
+            }else if (PICK_PDF_REQUEST == 13) {
+                filePath13 = data.getData();
+                file = new File(filePath13.getPath());
+                fname = file.getAbsolutePath();
+                file_size_in_kb = Integer.parseInt(String.valueOf(file.length()/1024));
+                if (file_size_in_kb<=1370) tv_d13.setText(fname);
+                else Toast.makeText(getActivity(), "Max file size 1370 kb", Toast.LENGTH_SHORT).show();
+            }else if (PICK_PDF_REQUEST == 14) {
+                filePath14 = data.getData();
+                file = new File(filePath14.getPath());
+                fname = file.getAbsolutePath();
+                file_size_in_kb = Integer.parseInt(String.valueOf(file.length()/1024));
+                if (file_size_in_kb<=1370) tv_d14.setText(fname);
+                else Toast.makeText(getActivity(), "Max file size 1370 kb", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -481,6 +520,18 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.button_chose_d11 :
                 PICK_PDF_REQUEST = 11;
+                showFileChooser();
+                break;
+            case R.id.button_chose_d12 :
+                PICK_PDF_REQUEST = 12;
+                showFileChooser();
+                break;
+            case R.id.button_chose_d13 :
+                PICK_PDF_REQUEST = 13;
+                showFileChooser();
+                break;
+            case R.id.button_chose_d14 :
+                PICK_PDF_REQUEST = 14;
                 showFileChooser();
                 break;
             default:
@@ -559,9 +610,28 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
                             break;
                         case 11:
                             if (!tv_d11.getText().toString().equals("")) {
-                                //String selectedFilePath = RealPathUtil.getRealPath(getActivity().getApplicationContext(), filePath11);
-                                //tv_d11.setText(""+selectedFilePath);
                                 new UploadFileService(getActivity(), filePath11, mParam1.trim(), "IDP").execute();
+                            } else {
+                                Toast.makeText(getActivity(), "Select File First", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case 12:
+                            if (!tv_d12.getText().toString().equals("")) {
+                                new UploadFileService(getActivity(), filePath12, mParam1.trim(), "LVC").execute();
+                            } else {
+                                Toast.makeText(getActivity(), "Select File First", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case 13:
+                            if (!tv_d13.getText().toString().equals("")) {
+                                new UploadFileService(getActivity(), filePath12, mParam1.trim(), "RCV").execute();
+                            } else {
+                                Toast.makeText(getActivity(), "Select File First", Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        case 14:
+                            if (!tv_d14.getText().toString().equals("")) {
+                                new UploadFileService(getActivity(), filePath14, mParam1.trim(), "OTHER").execute();
                             } else {
                                 Toast.makeText(getActivity(), "Select File First", Toast.LENGTH_SHORT).show();
                             }
@@ -599,6 +669,12 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
             ll_img_done10.setVisibility(View.GONE);
         }else if (PICK_PDF_REQUEST == 11) {
             ll_img_done11.setVisibility(View.GONE);
+        }else if (PICK_PDF_REQUEST == 12) {
+            ll_img_done12.setVisibility(View.GONE);
+        }else if (PICK_PDF_REQUEST == 13) {
+            ll_img_done13.setVisibility(View.GONE);
+        }else if (PICK_PDF_REQUEST == 14) {
+            ll_img_done14.setVisibility(View.GONE);
         }
     }
 
@@ -625,6 +701,12 @@ public class UploadDocumentFragment extends Fragment implements View.OnClickList
             ll_img_done10.setVisibility(View.VISIBLE);
         }else if (PICK_PDF_REQUEST == 11) {
             ll_img_done11.setVisibility(View.VISIBLE);
+        }else if (PICK_PDF_REQUEST == 12) {
+            ll_img_done12.setVisibility(View.VISIBLE);
+        }else if (PICK_PDF_REQUEST == 13) {
+            ll_img_done13.setVisibility(View.VISIBLE);
+        }else if (PICK_PDF_REQUEST == 14) {
+            ll_img_done14.setVisibility(View.VISIBLE);
         }
     }
 }

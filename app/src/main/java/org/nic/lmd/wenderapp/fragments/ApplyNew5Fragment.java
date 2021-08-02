@@ -301,9 +301,10 @@ public class ApplyNew5Fragment extends Fragment {
                 edit_quantity.setText("");
                 if (i <= 0) {
                     cat_id = "0";
+                    validity_id="0";
                 } else {
-                    sp_valid.setEnabled(true);
                     cat_id = insCategoryEntities.get(i - 1).getValue().trim();
+                    validity_id=insCategoryEntities.get(i - 1).getValidity().trim();
                      if(cat_id.equals("2")){
                          text_evalue.setHint("d-value");
                     }
@@ -315,8 +316,7 @@ public class ApplyNew5Fragment extends Fragment {
                         text_ip_qt.setHint("Quantity *");
                         text_evalue.setHint("e-value");
                     }
-                    sp_valid.setSelection(((ArrayAdapter<String>) sp_valid.getAdapter()).getPosition(insCategoryEntities.get(i - 1).getValidity()));
-                    sp_valid.setEnabled(false);
+
                     capacitySpinnerBinding();
                 }
             }
@@ -352,14 +352,14 @@ public class ApplyNew5Fragment extends Fragment {
                     if (cat_id.equals("21") && cap_id.equals("229")) {
                         text_ip_qt.setHint("Capacity of Tank in Litres *");
                     } else if ((cat_id.equals("16") && cap_id.equals("219")) || (cat_id.equals("19") && cap_id.equals("225")) || (cat_id.equals("22") && cap_id.equals("230"))) {
-                        text_ip_qt.setHint("No of Nozzles *");
+                        text_ip_qt.setHint("No of Nozzels *");
                         edit_cap_min.setVisibility(View.GONE);
                         edit_eval.setVisibility(View.GONE);
                     }else {
                         text_ip_qt.setHint("Quantity *");
                     }
-
                 }
+                validityBinding();
             }
 
             @Override
@@ -393,7 +393,11 @@ public class ApplyNew5Fragment extends Fragment {
 
             }
         });
-
+        sp_valid.setEnabled(true);
+        if (!validity_id.equals("0"))
+        sp_valid.setSelection(((ArrayAdapter<String>) sp_valid.getAdapter()).getPosition(validity_id));
+        else sp_valid.setSelection(0);
+        sp_valid.setEnabled(false);
     }
 
     private void classSpinnerBinding() {

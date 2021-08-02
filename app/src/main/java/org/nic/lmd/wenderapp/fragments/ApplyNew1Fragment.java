@@ -48,6 +48,8 @@ import org.nic.lmd.wenderapp.utilities.Utiilties;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.IllegalFormatCodePointException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class ApplyNew1Fragment extends Fragment {
@@ -287,12 +289,6 @@ public class ApplyNew1Fragment extends Fragment {
                 if (i > 0) {
                     district_f1 = districts.get(i - 1);
                     initializeBlockSpinner();
-                    if (district_f1.getId().trim().equals("212")){
-                        fra_pol_station.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        fra_pol_station.setVisibility(View.GONE);
-                    }
                 } else {
                     district_f1 = null;
                     initializeBlockSpinner();
@@ -320,13 +316,23 @@ public class ApplyNew1Fragment extends Fragment {
     }
 
     private void initializeBlockSpinner() {
+        List<Block> blocks=null;
         String dist_id = "0";
         if (district_f1 != null) {
             dist_id = district_f1.getId().trim();
         } else {
             dist_id = "0";
         }
-        final ArrayList<Block> blocks = new DataBaseHelper(getActivity()).getBlock(dist_id);
+         final ArrayList<Block> blocks2 = new DataBaseHelper(getActivity()).getBlock(dist_id);
+        if(district_f1==null){
+            blocks=blocks2;
+        }
+        else if(district_f1.getId().trim().equals("212")) {
+            blocks= blocks2.stream().
+                    filter(block -> (block.getValue().equals(String.valueOf(1965)))||(block.getValue().equals(String.valueOf(5001)))||(block.getValue().equals(String.valueOf(5002)))||(block.getValue().equals(5003))||(block.getValue().equals(String.valueOf(5004)))).collect(Collectors.toList());
+        }else{
+            blocks=blocks2;
+        }
         ArrayList<String> stringArrayList2 = new ArrayList<>();
         stringArrayList2.add("--SELECT BLOCK--");
         if (stringArrayList2.size() > 0) {
@@ -335,13 +341,19 @@ public class ApplyNew1Fragment extends Fragment {
             }
         }
         sp_block.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, stringArrayList2));
+        List<Block> finalBlocks = blocks;
         sp_block.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i > 0) {
-                    block_f1 = blocks.get(i - 1);
+                    block_f1 = finalBlocks.get(i - 1);
+                    if (block_f1.getDistrictId().trim().equals("212")){
+                        fra_pol_station.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        fra_pol_station.setVisibility(View.GONE);
+                    }
                     initializeThana();
-
                 } else {
                     block_f1 = null;
                     initializeThana();
@@ -353,7 +365,7 @@ public class ApplyNew1Fragment extends Fragment {
 
             }
         });
-        if (block_f1!=null){
+        if (block_f1!=null && stringArrayList2.contains(block_f1.getName().trim())){
             sp_block.setSelection(((ArrayAdapter<String>) sp_block.getAdapter()).getPosition(block_f1.getName().trim()));
         }
     }
@@ -361,6 +373,7 @@ public class ApplyNew1Fragment extends Fragment {
 
 
     private void initializeThana() {
+         List<ThanaEntity> thanaEntities=null;
         String bblockid="";
         if (block_f1 != null) {
             if (block_f1.getValue()!=null)
@@ -369,7 +382,15 @@ public class ApplyNew1Fragment extends Fragment {
         }else{
             bblockid="0";
         }
-        final ArrayList<ThanaEntity> thanaEntities = new DataBaseHelper(getActivity()).getThanaAll(bblockid);
+        List<ThanaEntity> thanaEntities2 = new DataBaseHelper(getActivity()).getThanaAll(bblockid);
+        if (district_f1==null){
+            thanaEntities=thanaEntities2;
+        }
+        else if(district_f1.getId().trim().equals("212")){thanaEntities= thanaEntities2.stream().
+                filter(thana -> (thana.getBlockCode().equals(String.valueOf(1965)))||(thana.getBlockCode().equals(String.valueOf(5001)))||(thana.getBlockCode().equals(String.valueOf(5002)))||(thana.getBlockCode().equals(String.valueOf(5003)))||(thana.getBlockCode().equals(String.valueOf(5004)))).collect(Collectors.toList());
+        }else{
+            thanaEntities=thanaEntities2;
+        }
         ArrayList<String> stringArrayList2 = new ArrayList<>();
         stringArrayList2.add("--Select Thana--");
         if (stringArrayList2.size() > 0) {
@@ -378,11 +399,12 @@ public class ApplyNew1Fragment extends Fragment {
             }
         }
         sp_subdiv.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, stringArrayList2));
+        List<ThanaEntity> finalThanaEntities = thanaEntities;
         sp_subdiv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i > 0) {
-                    thana = thanaEntities.get(i-1);
+                    thana = finalThanaEntities.get(i-1);
                 } else {
                     thana = null;
                 }
