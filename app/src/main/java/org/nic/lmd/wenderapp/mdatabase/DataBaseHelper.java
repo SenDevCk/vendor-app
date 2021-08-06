@@ -2127,7 +2127,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return 0;
         } finally {
             db.close();
-            this.getWritableDatabase().close();
+            //this.getWritableDatabase().close();
         }
         return c;
     }
@@ -2153,7 +2153,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             // TODO: handle exception
         } finally {
             db.close();
-            this.getWritableDatabase().close();
+            //this.getWritableDatabase().close();
         }
         return c;
 

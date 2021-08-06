@@ -114,17 +114,14 @@ public class ApplyNew1Fragment extends Fragment {
         tv_reg_date_clr =  getActivity().findViewById(R.id.tv_reg_date_clr);
         tv_reg_date =  getActivity().findViewById(R.id.tv_reg_date);
         bt_reg_date =  getActivity().findViewById(R.id.bt_reg_date);
-        bt_reg_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag = 3;
-                ShowDialog2();
-            }
+        bt_reg_date.setOnClickListener(view15 -> {
+            flag = 3;
+            ShowDialog2();
         });
         tv_lic_date_clr.setOnClickListener(v -> tv_lic_date.setText(""));
         tv_est_date_clr.setOnClickListener(v -> tv_est_date.setText(""));
         tv_reg_date_clr.setOnClickListener(v -> tv_reg_date.setText(""));
-        tv_com_date = (TextView) getActivity().findViewById(R.id.tv_com_date);
+        tv_com_date =  getActivity().findViewById(R.id.tv_com_date);
         bt_com_date =  getActivity().findViewById(R.id.bt_com_date);
         bt_com_date.setOnClickListener(view12 -> {
             flag = 4;

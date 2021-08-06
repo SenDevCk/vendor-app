@@ -334,7 +334,11 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
         if (res != null) {
             try {
                 final JSONObject jsonObject = new JSONObject(res);
-                if (jsonObject.has("statusCode")) {
+                if(jsonObject.has("timestamp")){
+                    alertDialog.setMessage("" + jsonObject.getString("message"));
+                    alertDialog.show();
+                }
+                else if (jsonObject.has("statusCode")) {
                     if (jsonObject.getInt("statusCode") == 200) {
                         Toast.makeText(activity, "Success : " + jsonObject.getString("status"), Toast.LENGTH_SHORT).show();
                         new DataBaseHelper(activity).deleteAllInstruments();
@@ -350,9 +354,9 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                             Log.e("log : ", "Vendor Id not saved in UploadTradorService(line 249)");
                             Toast.makeText(activity, "Vendor Id not saved in UploadTradorService", Toast.LENGTH_SHORT).show();
                         } else {
-                            FrameLayout frame_reg = (FrameLayout) activity.findViewById(R.id.frame_ap_new);
                             UploadDocumentFragment applyNew1Fragment = UploadDocumentFragment.newInstance(vid, "");
                             FragmentManager fragmentManager = activity.getFragmentManager();
+                            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.frame_ap_new, applyNew1Fragment);
                             //fragmentTransaction.addToBackStack(null);
@@ -375,9 +379,9 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                                 Log.e("log : ", "Vender Id not saved in UploadTradorService(line 249)");
                                 Toast.makeText(activity, "Vender Id not saved in UploadTradorService", Toast.LENGTH_SHORT).show();
                             } else {
-                                FrameLayout frame_reg = (FrameLayout) activity.findViewById(R.id.frame_ap_new);
                                 UploadDocumentFragment applyNew1Fragment = UploadDocumentFragment.newInstance(id_ven, "");
                                 FragmentManager fragmentManager = activity.getFragmentManager();
+                                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.frame_ap_new, applyNew1Fragment);
                                 //fragmentTransaction.addToBackStack(null);
