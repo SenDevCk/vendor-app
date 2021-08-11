@@ -29,22 +29,13 @@ public class ApplyNewActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> ApplyNewActivity.super.onBackPressed());
         frame_reg =  findViewById(R.id.frame_ap_new);
         if (getIntent().hasExtra("from")){
-            if (getIntent().hasExtra("for")) {
-                if (!getIntent().getStringExtra("for").equals("edit")) {
-                    new DataBaseHelper(ApplyNewActivity.this).deleteAllInstruments();
-                    new DataBaseHelper(ApplyNewActivity.this).deleteAllNozzle();
-                    new DataBaseHelper(ApplyNewActivity.this).updateweightDenomination();
-                    new DataBaseHelper(ApplyNewActivity.this).deleteAllPatner();
-                    new DataBaseHelper(ApplyNewActivity.this).deleteAllTanks();
-                }
-            }
             UploadDocumentFragment applyNew1Fragment = UploadDocumentFragment.newInstance(getIntent().getStringExtra("ven_id"),"");
             android.app.FragmentManager fragmentManager = getFragmentManager();
             android.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frame_ap_new, applyNew1Fragment);
             fragmentTransaction.commit();
         }else {
-            if (!getIntent().getStringExtra("for").equals("edit")) {
+            if (getIntent().getStringExtra("for").equals("new")) {
                 new DataBaseHelper(ApplyNewActivity.this).deleteAllInstruments();
                 new DataBaseHelper(ApplyNewActivity.this).deleteAllNozzle();
                 new DataBaseHelper(ApplyNewActivity.this).updateweightDenomination();
@@ -55,7 +46,6 @@ public class ApplyNewActivity extends AppCompatActivity {
             androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frame_ap_new, applyNew1Fragment);
-            //fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
     }

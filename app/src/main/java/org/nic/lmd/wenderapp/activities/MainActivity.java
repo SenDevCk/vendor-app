@@ -73,14 +73,7 @@ public class MainActivity extends AppCompatActivity {
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //navigationView.setNavigationItemSelectedListener(this);
         //navigation header
-        try {
-            String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            String code_v = String.valueOf(getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
-            TextView app_name_tip =  navigationView.findViewById(R.id.app_name_tip);
-            app_name_tip.setText(getResources().getString(R.string.app_name) + " ( " + code_v + "." + version + " ) V");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+
         try {
             String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
             String code_v = String.valueOf(getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);

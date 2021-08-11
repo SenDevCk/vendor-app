@@ -65,7 +65,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(Context context) {
 
-        super(context, DB_NAME, null, 2);
+        super(context, DB_NAME, null, 3);
         if (Build.VERSION.SDK_INT >= 29) {
             DB_PATH = context.getDatabasePath(DB_NAME).getPath();
         } else if (Build.VERSION.SDK_INT >= 21) {
@@ -1317,7 +1317,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             contentValues.put("e_val", "" + instrumentEntity.getE_val());
             //c = sqLiteDatabase.update("INSTRUMENT_ADD", contentValues, "pro_id=? AND cat_id=? AND cap_id=?", new String[]{instrumentEntity.getPro_id(), instrumentEntity.getCat_id(), instrumentEntity.getCap_id()});
             //if (c <= 0)
-                c = sqLiteDatabase.insert("INSTRUMENT_ADD", null, contentValues);
+            c = sqLiteDatabase.insert("INSTRUMENT_ADD", null, contentValues);
             if (c > 0) {
                /* if (getSelectedInsClass(String.valueOf(c)).size() > 0) {
                     deleteSelectedClassByID(String.valueOf(c));
@@ -1948,7 +1948,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long saveVenderJsonData(String res, Activity activity) {
+    public long saveVenderJsonData(String res) {
         long c = -1;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -2045,7 +2045,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 patnerEntity.setPinCode(jsonObject_pat.getString("pincode"));
                 patnerEntity.setMobile(jsonObject_pat.getString("mobileNo"));
                 patnerEntity.setLandline(jsonObject_pat.getString("landlineNo"));
-                patnerEntity.setEmail(jsonObject_pat.getString("emailId"));
+                if (!jsonObject.isNull("emailId"))
+                 patnerEntity.setEmail(jsonObject_pat.getString("emailId"));
                 if (jsonObject_pat.getBoolean("nominatedUnderSection")) {
                     patnerEntity.setIs_nom_under49("Y");
                 } else {
@@ -2055,11 +2056,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
             for (int i = 0; i < jsonArray2.length(); i++) {
                 JSONObject jsonObject_deno = jsonArray2.getJSONObject(i);
-                String cat_id=jsonObject_deno.getString("categoryId");
-                if (cat_id.equals("19")){
-                    DenomintionEntity denomintionEntity=new DataBaseHelper(activity).getWeightDenominationByID(jsonObject_deno.getString("denomination"));
-                    int qt=Integer.parseInt(denomintionEntity.getQuantity())+1;
-                    VehicleTankDetails vehicleTankDetails=new VehicleTankDetails();
+                String cat_id = jsonObject_deno.getString("categoryId");
+                if (cat_id.equals("19")) {
+                    DenomintionEntity denomintionEntity = this.getWeightDenominationByID(jsonObject_deno.getString("denomination"));
+                    int qt = Integer.parseInt(denomintionEntity.getQuantity()) + 1;
+                    VehicleTankDetails vehicleTankDetails = new VehicleTankDetails();
                     vehicleTankDetails.setDenomId(Integer.parseInt(denomintionEntity.getValue()));
                     vehicleTankDetails.setRegNumber(jsonObject_deno.getString("vechileRegistractionNo"));
                     vehicleTankDetails.setEngineNumber(jsonObject_deno.getString("vechileEngineNo"));
@@ -2067,8 +2068,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     vehicleTankDetails.setOwnerFirmName(jsonObject_deno.getString("vechileOwnerName"));
                     vehicleTankDetails.setCountry(jsonObject_deno.getString("countryName"));
                     addTank(vehicleTankDetails);
-                    c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y",String.valueOf(qt), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
-                }else {
+                    c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y", String.valueOf(qt), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
+                } else {
                     c = updateDenomination((jsonObject_deno.isNull("vendorId")) ? "" : jsonObject_deno.getString("vendorId"), (jsonObject_deno.isNull("vcId")) ? "" : jsonObject_deno.getString("vcId"), jsonObject_deno.getString("denomination"), "Y", jsonObject_deno.getString("quantity"), 0, "0", jsonObject_deno.getString("validYear"), jsonObject_deno.getString("proposalId"), false);
                 }
             }
@@ -2085,7 +2086,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 //instrumentEntity.setQuantity(jsonObject_ins.getString("quantity"));
                 if ((instrumentEntity.getCat_id().equals("16") && instrumentEntity.getCap_id().equals("219")) || (instrumentEntity.getCat_id().equals("19") && instrumentEntity.getCap_id().equals("225")) || (instrumentEntity.getCat_id().equals("22") && instrumentEntity.getCap_id().equals("230"))) {
                     instrumentEntity.setQuantity(jsonObject_ins.getString("nozzels"));
-                }else {
+                } else {
                     instrumentEntity.setQuantity(jsonObject_ins.getString("quantity"));
                 }
                 instrumentEntity.setIns_class(jsonObject_ins.getString("classId"));
@@ -2382,9 +2383,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long totalCount = 0;
         try {
             db = this.getReadableDatabase();
-            String quary="select * from VEHICLE_TANK where denom_id='" + denom_id + "'";
+            String quary = "select * from VEHICLE_TANK where denom_id='" + denom_id + "'";
             cursor = db.rawQuery(quary, null);
-            System.out.println("size== "+cursor.getCount());
+            System.out.println("size== " + cursor.getCount());
             while (cursor.moveToNext()) {
                 VehicleTankDetails vehicleTankDetail = new VehicleTankDetails();
                 vehicleTankDetail.setRegNumber((cursor.isNull(cursor.getColumnIndex("reg_no"))) ? "" : cursor.getString(cursor.getColumnIndex("reg_no")));

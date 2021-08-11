@@ -124,5 +124,16 @@
             android:textColor="@android:color/black"
             android:onClick="Register"
             android:text="Register"/>
+
     </LinearLayout>
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/version"
+        android:gravity="center"
+        android:textSize="20dp"
+       android:layout_alignParentBottom="true"
+        android:padding="20dp"
+        android:textColor="@android:color/black"/>
 </RelativeLayout>

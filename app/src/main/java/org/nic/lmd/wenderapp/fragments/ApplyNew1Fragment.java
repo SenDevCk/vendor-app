@@ -209,8 +209,8 @@ public class ApplyNew1Fragment extends Fragment {
         SQLiteDatabase db = dataBaseHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select shop_name,add1,add2,mobile,email,landmark,landline,pin,city,date_of_est,licence_date,reg_no,date_of_comm,date_of_reg,licence_no,dis_id,block_id,premise_type,type_firm,thana_id from VENDER_DETAILS where _id='" + GlobalVariable.count_data + "'", null);
         while (cursor.moveToNext()) {
-            place=cursor.isNull(cursor.getColumnIndex("place_of_var"))?"": cursor.getString(cursor.getColumnIndex("place_of_var"));
-            if (place.equals("At LMO Office")) {
+            place=cursor.isNull(cursor.getColumnIndex("place_of_var"))?"": (cursor.getString(cursor.getColumnIndex("place_of_var")).trim());
+            if (place.trim().equals("At LMO Office")) {
                 radioButton2 =  rd_gp_place.findViewById(R.id.radio2);
                 radioButton2.setChecked(true);
             } else {
@@ -309,7 +309,12 @@ public class ApplyNew1Fragment extends Fragment {
         } else {
             dist_name = district_f1.getName().trim();
         }
-        sp_district.setSelection(((ArrayAdapter<String>) sp_district.getAdapter()).getPosition(dist_name));
+        if (!dist_name.equals("")) {
+            sp_district.setSelection(((ArrayAdapter<String>) sp_district.getAdapter()).getPosition(dist_name));
+            if (getActivity().getIntent().getStringExtra("for").equals("edit")) {
+                sp_district.setEnabled(false);
+            }
+        }
     }
 
     private void initializeBlockSpinner() {
@@ -539,10 +544,10 @@ public class ApplyNew1Fragment extends Fragment {
         } else if (!edit_mob.getText().toString().trim().matches(GlobalVariable.MOB_PATTERN)) {
             edit_mob.setError("Enter Valid MOBILE NO.");
             view_spin = edit_mob;
-        } else if (!edit_email.getText().toString().trim().matches(GlobalVariable.EMAIL_PATTERN)) {
+        } /*else if (!edit_email.getText().toString().trim().matches(GlobalVariable.EMAIL_PATTERN)) {
             edit_email.setError("Enter Valid Email");
             view_spin = edit_email;
-        } else if (tv_est_date.getText().toString().trim().equals("")) {
+        }*/ else if (tv_est_date.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), "Select date of Establishment !", Toast.LENGTH_SHORT).show();
             view_spin = tv_est_date;
         } /*else if (tv_lic_date.getText().toString().trim().equals("")) {

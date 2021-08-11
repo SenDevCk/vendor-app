@@ -199,7 +199,13 @@ public class ApplyNew5Fragment extends Fragment {
 
     private boolean validate() {
         boolean validated = false;
-        if (pro_id.equals("0")) {
+        long tanks=new DataBaseHelper(getActivity()).getTankcount();
+        if(tanks>0){
+            message = "You cannot add instruments because you added tanks";
+            view_name=button_add_ins;
+            sp_per_type_f5.setSelection(0);
+        }
+        else if (pro_id.equals("0")) {
             message = "Please Select Proposal";
             view_name = sp_per_type_f5;
         } else if (cat_id.equals("0")) {

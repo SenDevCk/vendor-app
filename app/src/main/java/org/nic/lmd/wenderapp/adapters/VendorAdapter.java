@@ -225,7 +225,7 @@ public class VendorAdapter extends BaseAdapter {
                 db.updateweightDenomination();
                 db.deleteAllNozzle();
                 db.deleteAllTanks();
-                long c = db.saveVenderJsonData(res,activity);
+                long c = db.saveVenderJsonData(res);
                 if (CommonPref.getCheckUpdateForApply(activity) && c > 0) {
                     Intent intent = new Intent(activity, ApplyNewActivity.class);
                     intent.putExtra("for", "edit");

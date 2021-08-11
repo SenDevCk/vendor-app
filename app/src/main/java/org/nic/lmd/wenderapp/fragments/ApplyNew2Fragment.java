@@ -103,57 +103,51 @@ public class ApplyNew2Fragment extends Fragment {
         initializeBlockSpinner();
         button_next2 =  getActivity().findViewById(R.id.button_next2);
         button_add_partner =  getActivity().findViewById(R.id.button_add_partner);
-        button_next2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (new DataBaseHelper(getActivity()).getAllPatnersCount() < 1) {
-                    Toast.makeText(getActivity(), "Please add atleast one patner", Toast.LENGTH_SHORT).show();
-                } else {
-                    frameLayout =  getActivity().findViewById(R.id.frame_ap_new);
-                    ApplyNew3Fragment applyNew3Fragment = new ApplyNew3Fragment();
-                    fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frame_ap_new, applyNew3Fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                }
+        button_next2.setOnClickListener(view12 -> {
+            if (new DataBaseHelper(getActivity()).getAllPatnersCount() < 1) {
+                Toast.makeText(getActivity(), "Please add atleast one patner", Toast.LENGTH_SHORT).show();
+            } else {
+                frameLayout =  getActivity().findViewById(R.id.frame_ap_new);
+                ApplyNew3Fragment applyNew3Fragment = new ApplyNew3Fragment();
+                fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_ap_new, applyNew3Fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
-        button_add_partner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validate()) {
-                    partner = new PatnerEntity();
-                    partner.setFirm_type("0");
-                    partner.setDate_of_com("");
-                    partner.setPlace_of_var("");
-                    partner.setDesignation_id("" + designation_f2.getId().trim());
-                    partner.setName(edit_name_f2.getText().toString().trim());
-                    partner.setFather_name(edit_fname_f2.getText().toString().trim());
-                    partner.setAdhar_vid(edit_adhar_f2.getText().toString().trim());
-                    partner.setAdd1(edit_add1_f2.getText().toString().trim());
-                    partner.setAdd2(edit_add2_f2.getText().toString().trim());
-                    partner.setLandmark(edit_landmark_f2.getText().toString().trim());
-                    partner.setCity(edit_city_f2.getText().toString().trim());
-                    partner.setDistrict(district_f2.getId().trim());
-                    partner.setBlock(block_f2.getValue().trim());
-                    partner.setPinCode(edit_pin_f2.getText().toString().trim());
-                    partner.setMobile(edit_mob_f2.getText().toString().trim());
-                    partner.setLandline(edit_contact_landline_f2.getText().toString().trim());
-                    partner.setEmail(edit_email_f2.getText().toString().trim());
-                    if (check_49.isChecked()) partner.setIs_nom_under49("Y");
-                    else partner.setIs_nom_under49("N");
-                    long c = new DataBaseHelper(getActivity()).addPartner(partner);
-                    if (c > 0) {
-                        Toast.makeText(getActivity(), "Saved !", Toast.LENGTH_SHORT).show();
-                        setPartnerCount();
-                    } else {
-                        Toast.makeText(getActivity(), "Not saved !", Toast.LENGTH_SHORT).show();
-                    }
+        button_add_partner.setOnClickListener(view1 -> {
+            if (validate()) {
+                partner = new PatnerEntity();
+                partner.setFirm_type("0");
+                partner.setDate_of_com("");
+                partner.setPlace_of_var("");
+                partner.setDesignation_id("" + designation_f2.getId().trim());
+                partner.setName(edit_name_f2.getText().toString().trim());
+                partner.setFather_name(edit_fname_f2.getText().toString().trim());
+                partner.setAdhar_vid(edit_adhar_f2.getText().toString().trim());
+                partner.setAdd1(edit_add1_f2.getText().toString().trim());
+                partner.setAdd2(edit_add2_f2.getText().toString().trim());
+                partner.setLandmark(edit_landmark_f2.getText().toString().trim());
+                partner.setCity(edit_city_f2.getText().toString().trim());
+                partner.setDistrict(district_f2.getId().trim());
+                partner.setBlock(block_f2.getValue().trim());
+                partner.setPinCode(edit_pin_f2.getText().toString().trim());
+                partner.setMobile(edit_mob_f2.getText().toString().trim());
+                partner.setLandline(edit_contact_landline_f2.getText().toString().trim());
+                partner.setEmail(edit_email_f2.getText().toString().trim());
+                if (check_49.isChecked()) partner.setIs_nom_under49("Y");
+                else partner.setIs_nom_under49("N");
+                long c = new DataBaseHelper(getActivity()).addPartner(partner);
+                if (c > 0) {
+                    Toast.makeText(getActivity(), "Saved !", Toast.LENGTH_SHORT).show();
+                    setPartnerCount();
                 } else {
-                    Utiilties.scrollToView(scroll_f2, view_name);
-                    Toast.makeText(getActivity(), "Something went wrong !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Not saved !", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Utiilties.scrollToView(scroll_f2, view_name);
+                Toast.makeText(getActivity(), "Something went wrong !", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -335,10 +329,10 @@ public class ApplyNew2Fragment extends Fragment {
         } else if (!edit_mob_f2.getText().toString().trim().matches(GlobalVariable.MOB_PATTERN)) {
             edit_mob_f2.setError("Invalid Mobile");
             view_name = edit_mob_f2;
-        } else if (!edit_email_f2.getText().toString().trim().matches(GlobalVariable.EMAIL_PATTERN)) {
+        } /*else if (!edit_email_f2.getText().toString().trim().matches(GlobalVariable.EMAIL_PATTERN)) {
             edit_email_f2.setError("Invalid Email");
             view_name = edit_email_f2;
-        } else {
+        }*/ else {
             validated = true;
         }
         return validated;

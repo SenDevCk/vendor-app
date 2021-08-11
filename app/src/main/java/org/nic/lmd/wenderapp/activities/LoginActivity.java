@@ -3,6 +3,7 @@ package org.nic.lmd.wenderapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,7 @@ import org.nic.lmd.wenderapp.asynctask.LoginLoader;
 public class LoginActivity extends AppCompatActivity {
 
     Button register,button_login;
-    TextView textView;
+    TextView textView,text_version;
     EditText user_name,password;
     /*Upper Case Character,Lower Case Character,Special Character,Number,and minimum of 8 digits.*/
     private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
@@ -30,11 +31,19 @@ public class LoginActivity extends AppCompatActivity {
         button_login=findViewById(R.id.button_login);
         register=findViewById(R.id.button_signup);
         textView=findViewById(R.id.text_log);
+        text_version=findViewById(R.id.version);
         textView.setText(getResources().getString(R.string.app_name));
         user_name= findViewById(R.id.user_name);
         password= findViewById(R.id.password);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/header_font.ttf");
         textView.setTypeface(face);
+        try {
+            String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            String code_v = String.valueOf(getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
+            text_version.setText(getResources().getString(R.string.app_name) + " ( " + code_v + "." + version + " ) V");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void Register(View view) {

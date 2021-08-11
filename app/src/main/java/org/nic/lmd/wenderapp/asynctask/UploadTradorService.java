@@ -282,7 +282,7 @@ public class UploadTradorService extends AsyncTask<String, Void, String> {
                 jsonObject.accumulate("pincode", patnerEntity.getPinCode());
                 jsonObject.accumulate("mobileNo", "" + patnerEntity.getMobile());
                 jsonObject.accumulate("landlineNo", "" + patnerEntity.getLandline());
-                jsonObject.accumulate("emailId", "" + patnerEntity.getEmail());
+                jsonObject.accumulate("emailId", (patnerEntity.getEmail().equals(""))? JSONObject.NULL:patnerEntity.getEmail());
                 if (patnerEntity.getIs_nom_under49().equalsIgnoreCase("Y"))
                     jsonObject.accumulate("nominatedUnderSection", true);
                 else jsonObject.accumulate("nominatedUnderSection", false);
